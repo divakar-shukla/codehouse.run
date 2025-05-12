@@ -1,8 +1,8 @@
-import app from "./app.js"
-import dotenv from "dotenv"
+import app from "./app.js";
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-app.listen(process.env.PORT, ()=>{
-    console.log("server is runnning on port 8080")
-})
+app.listen(process.env.PORT, () => {
+  console.log("server is runnning on port 8080");
+});

@@ -1,10 +1,9 @@
-import express from "express"
+import express from "express";
 import cookieParser from "cookie-parser";
 
+const app = express();
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
-const  app = express();
-app.use(express.json())
-app.use(cookieParser())
-app.use(express.urlencoded({extended:true}))
-
-export default app
+export default app;
