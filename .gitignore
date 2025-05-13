@@ -1,0 +1,15 @@
+# Ignore all .env files
+.env
+
+# Ignore all log files
+*.log
+
+# Ignore everything in temp folder
+temp/
+
+# Ignore everything in temp folder
+node_nodules/
+
+
+
+
