@@ -1,5 +1,13 @@
 import { body } from "express-validator";
 
+
+const customAvatarValidator = (value, {req})=>{
+  const filename = req.file.orignalname
+  const extention = filename.split(".").pop().toLowecase();
+  const allowedFile = ["jpg", "png", "jpeg"]
+  return allowedFile.includes(extention)
+   
+}
 const registerValidator = () => {
   return [
     body("email")
@@ -8,20 +16,12 @@ const registerValidator = () => {
       .withMessage("Email is required")
       .isEmail()
       .withMessage("Email is invalid"),
-    body("username")
+      
+    body("password")
       .trim()
       .notEmpty()
-      .withMessage("Username is required")
-      .isLowercase()
-      .withMessage("Username must be lowercase")
-      .isLength({ min: 3 })
-      .withMessage("Username must be at lease 3 characters long"),
-    body("password").trim().notEmpty().withMessage("Password is required"),
-    body("fullName")
-      .optional()
-      .trim()
-      .notEmpty()
-      .withMessage("Full name is required"),
+      .withMessage("Password is required")
+
   ];
 };
 
