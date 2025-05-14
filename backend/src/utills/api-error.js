@@ -1,21 +1,30 @@
 class ApiError extends Error {
   constructor(
-    statuscode,
+    statusCode,
     message = "Something went wrong.",
-    error = [],
-    stack = "",
+    errors = [],
+    stack = ""
   ) {
     super(message);
-    this.statuscode = statuscode;
+    this.statusCode = statusCode;
     this.message = message;
     this.success = false;
-    this.error = error; 
-
+    this.errors = errors;
     if (stack) {
       this.stack = stack;
     } else {
-      Error.captureStackTrace(this, this.contructor);
+      Error.captureStackTrace(this, this.constructor);
     }
+  }
+
+  toJSON() {
+    return {
+      statusCode: this.statusCode,
+      message: this.message,
+      success: this.success,
+      errors: this.errors,
+      ...(process.env.NODE_ENV != "production" && {stack:this.stack})
+    };
   }
 }
 

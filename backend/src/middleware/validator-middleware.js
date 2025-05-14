@@ -15,7 +15,7 @@ console.log(error)
         const errorPath = err.path
         extractError.push({errorPath:err.msg})
     })
-
-    return res.status(422).json(new ApiError(422, "Given data is not valid", extractError))
+    
+    return res.status(422).json(new ApiError(422, "Given data is not valid", extractError).toJSON())
   }
 export default validate
