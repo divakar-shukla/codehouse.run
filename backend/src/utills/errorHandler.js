@@ -1,13 +1,25 @@
+import ApiError from "./api-error.js";
+
 const errorHandler = (err, req, res, next)=>{
-    const statuscode = err.statuscode || 500;
 
-    res.status(statuscode).json({
-        statuscode,
-        message:err.message || "internal server error",
-        success:false,
-        error: err.error || [],
-        ...(process.env.NODE_ENV != "production" && {stack:err.stack})
+    let error = err; 
 
-    })
+    if(!(error instanceof ApiError)){
+
+        const statusCode = error.statusCode || 500;
+        const message = error.message || "Something went wrong";
+        error = new ApiError(statusCode, message, error?.error || [], err.stack)
+    }
+
+    const response = {
+        ...error,
+        message:error.message,
+        ...(process.env.NODE_ENV === "development" && {stack:error.stack})
+    }
+
+    console.error(error.message)
+
+    return res.status(error.statusCode).json(response);
+
 }
 export default errorHandler;

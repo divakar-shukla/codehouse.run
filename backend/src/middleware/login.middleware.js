@@ -1,20 +1,33 @@
 import ApiError from "../utills/api-error.js";
 import jwt from "jsonwebtoken"
+import db from "../lib/db.js";
 
-const isLogin = (req, res, next)=>{
-    const token = req.cookies.token;
+const isLogin = async (req, res, next)=>{
+    const token = req.cookies.jwt;
     // console.log(token)
     if(!token){
-        return res.status(401).json(new ApiError(401, "Login with email and password"))
+      throw new ApiError(401, "Login with email or username and password")
     }
-
+    let decodedToken
     try {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = token;
-        next()
+         decodedToken = jwt.verify(token, process.env.JWT_SECRET)
     } catch (error) {
-        return res.status(401).json(new ApiError(401, "Invalid token"))
+      throw  new ApiError(401, "Invalid token")
     }
+     const loggedinUser = await db.user.findFirst({
+            where:{
+                id:decodedToken.id
+            },
+            select:{
+                id:true,
+                avatar:true,
+                email:true,
+                role:true
+            }
+        });
+
+        req.user =loggedinUser;
+        next()
 }
 
 export default isLogin;
