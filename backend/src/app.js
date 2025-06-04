@@ -11,6 +11,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.get("/api/v1/health", healthCheck);
 app.use("/api/v1/user", authRoutes)
-app.use("api/v1/problem", problemRoutes)
+app.use("/api/v1/problem", problemRoutes)
 app.use(errorHandler)
 export default app;

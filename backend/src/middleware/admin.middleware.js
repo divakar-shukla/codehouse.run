@@ -4,9 +4,9 @@ import db from "../lib/db.js";
   const isAdmin = async (req, res, next)=>{
     const userId = req.user.id
     console.log(userId)
-
+    let user
     try {
-        const user = await db.user.findFirst({
+         user = await db.user.findFirst({
             where:{
                 id:userId
             },

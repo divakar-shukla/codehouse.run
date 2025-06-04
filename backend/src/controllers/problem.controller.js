@@ -11,16 +11,16 @@ const createProblem = asyncHandler(async (req, res)=>{
     // loop throw refference solutions for defference language
 
     const {
-        title,
+        tittle,
         description, 
         difficulty, 
         tags, 
-        example, 
+        examples, 
         constraints, 
         hints, 
         editorial, 
-        testCases, 
-        codeSnnipts, 
+        testcases, 
+        codeSnippets, 
         referenceSolutions, 
     } = req.body
 
@@ -29,15 +29,15 @@ const createProblem = asyncHandler(async (req, res)=>{
     }
 
     
-    try {
+   
         for (const [language, solutionsCode] of Object.entries(referenceSolutions)){
             const languageId = getJudgeLanguageId(language)
-
+            console.log(languageId)
             if(!languageId){
-                throw ApiError(400 `${language} language is supported`)
+               throw new ApiError(400, `${language} language is not supported`)
             }
             
-            const submissions = testCases.map(({input, output})=>(
+            const submissions = testcases.map(({input, output})=>(
                 {
                     language_id:languageId,
                     source_code:solutionsCode,
@@ -47,41 +47,30 @@ const createProblem = asyncHandler(async (req, res)=>{
             ))
 
             const tokens = await submitBatch(submissions)
-
+        
             const batchResults = await pollBatchResult(tokens)
+            console.log(batchResults)
             
             for(let i = 0; i < batchResults.length; i++){
                 const batchResult = batchResults[i]
 
-                if(batchResult.status_id !== 3){
-                    throw ApiError(400, `Tastecase ${i + 1} failed for ${language} language`)
+                if(batchResult.status.id !== 3){
+                    throw new ApiError(400, `Tastecase ${i + 1} failed for ${language} language`)
                 }
 
             }
         }
-
-        const newProblem = db.problem.create({
+ try {
+        const newProblem = await db.problem.create({
             data:{
-               title,
+               tittle,
                description, 
                difficulty, 
                tags, 
-               example, 
+               examples, 
                constraints, 
-               testCases, 
-               codeSnnipts, 
-               referenceSolutions,
-               userId:req.user.id
-            },
-            select:{
-               title,
-               description, 
-               difficulty, 
-               tags, 
-               example, 
-               constraints, 
-               testCases, 
-               codeSnnipts, 
+               testcases, 
+               codeSnippets, 
                referenceSolutions,
                userId:req.user.id
             }
