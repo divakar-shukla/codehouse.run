@@ -1,23 +1,22 @@
 import { body } from "express-validator";
-import {UserRole} from "../generated/prisma/index.js"
+import { UserRole } from "../generated/prisma/index.js";
 
-const customAvatarValidator = (value, {req})=>{
-  const filename = req.file.orignalname
+const customAvatarValidator = (value, { req }) => {
+  const filename = req.file.orignalname;
   const extention = filename.split(".").pop().toLowecase();
-  const allowedFile = ["jpg", "png", "jpeg"]
-  return allowedFile.includes(extention)
-   
-}
+  const allowedFile = ["jpg", "png", "jpeg"];
+  return allowedFile.includes(extention);
+};
 const registerValidator = () => {
   return [
     body("username")
-    .trim()
-    .notEmpty()
-    .withMessage("Username is required")
-    .isLowercase()
-    .withMessage("Username must be lowercase")
-    .isLength({min:3})
-    .withMessage("Username must be atleast 3 characters long"),
+      .trim()
+      .notEmpty()
+      .withMessage("Username is required")
+      .isLowercase()
+      .withMessage("Username must be lowercase")
+      .isLength({ min: 3 })
+      .withMessage("Username must be atleast 3 characters long"),
 
     body("email")
       .trim()
@@ -25,46 +24,43 @@ const registerValidator = () => {
       .withMessage("Email is required")
       .isEmail()
       .withMessage("Email is invalid"),
-      
+
     body("password")
       .trim()
       .notEmpty()
       .withMessage("Password is required")
-      .isLength({min:8})
+      .isLength({ min: 8 })
       .withMessage("Password must be atleast 8 characters long"),
 
     body("role")
-    .optional()
-    .isIn(Object.values(UserRole))
-    .withMessage("Invalid user role"),
+      .optional()
+      .isIn(Object.values(UserRole))
+      .withMessage("Invalid user role"),
 
     body("avatar")
       .optional()
       .custom(customAvatarValidator)
-      .withMessage("Only jpg and png file allowed")
+      .withMessage("Only jpg and png file allowed"),
   ];
 };
 
-const loginValidator = ()=>{
-  return[
+const loginValidator = () => {
+  return [
     body("email")
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage("Email is required")
-    .isEmail()
-    .withMessage("Email is invalid"),
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Email is required")
+      .isEmail()
+      .withMessage("Email is invalid"),
 
     body("username")
-    .optional()
-    .trim()
-    .notEmpty()
-    .withMessage("Email is required"),
+      .optional()
+      .trim()
+      .notEmpty()
+      .withMessage("Email is required"),
 
-    body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("password is required")
-  ]
-}
-export { registerValidator, loginValidator};
+    body("password").trim().notEmpty().withMessage("password is required"),
+  ];
+};
+export { registerValidator, loginValidator };
