@@ -14,9 +14,11 @@ const problemRoutes = Router();
 problemRoutes.route("/create-problem").post(isLogin, isAdmin, createProblem);
 problemRoutes.route("/get-all-problem").get(isLogin, getAllProblems);
 problemRoutes.route("/get-problem/:id").get(isLogin, getProblemById);
-problemRoutes.route("/upadate-problem:id").put(isLogin, isAdmin, updateProblem);
 problemRoutes
-  .route("/upadate-problem:id")
+  .route("/upadate-problem/:id")
+  .put(isLogin, isAdmin, updateProblem);
+problemRoutes
+  .route("/delete-problem/:id")
   .delete(isLogin, isAdmin, deleteProblem);
 problemRoutes
   .route("/get-solved-problem")

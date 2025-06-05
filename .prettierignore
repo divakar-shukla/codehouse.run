@@ -1,3 +1,4 @@
-node_nodules
+node_nodules/
 .env
-generated
+migrations/
+generated/
