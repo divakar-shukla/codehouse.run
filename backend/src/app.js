@@ -16,5 +16,6 @@ app.use("/api/v1/user", authRoutes);
 app.use("/api/v1/problem", problemRoutes);
 app.use("/api/v1/execute-code", codeExecutonRoute);
 app.use("/api/v1/submission", submissionRoutes);
+app.use("/api/v1/playlist", playListRoute);
 app.use(errorHandler);
 export default app;
