@@ -201,7 +201,32 @@ const deleteProblem = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, {}, "Problem deleted successfully"));
 });
-const getProblemSolvedByUser = asyncHandler(async (req, res) => {});
+const getProblemSolvedByUser = asyncHandler(async (req, res) => {
+  const userId =  req.user.id
+
+  const solvedProblem = await db.problem.findMany({
+    where:{
+      solvedBy:{
+        some:{
+          userId
+        }
+      }
+    },
+    include:{
+      solvedBy:{
+        where:{
+          userId
+        }
+      }
+    }
+  })
+   if(!solvedProblem.length){
+        throw new ApiError(404, "Problem not found, which is solved by user")
+    }
+    res
+    .status(200)
+    .json(new ApiResponse(200, solvedProblem, "Problem fetched successfully"));
+});
 
 export {
   createProblem,

@@ -21,7 +21,7 @@ problemRoutes
   .route("/delete-problem/:id")
   .delete(isLogin, isAdmin, deleteProblem);
 problemRoutes
-  .route("/get-solved-problem")
+  .route("/get-solved-problemByUser")
   .get(isLogin, isAdmin, getProblemSolvedByUser);
 
 export default problemRoutes;
