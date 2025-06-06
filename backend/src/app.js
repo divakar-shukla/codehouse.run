@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.route.js";
 import problemRoutes from "./routes/problem.route.js";
 import codeExecutonRoute from "./routes/codeExecution.route.js";
 import submissionRoutes from "./routes/submission.route.js";
+import playListRoute from "./routes/playList.route.js";
 
 const app = express();
 app.use(express.json());
