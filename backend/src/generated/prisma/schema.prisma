@@ -87,6 +87,7 @@ model TestCaseResult {
   passed        Boolean
   stdin         String?
   stdout        String?
+  expected      String
   stderr        String?
   compileOutput String?
   status        String

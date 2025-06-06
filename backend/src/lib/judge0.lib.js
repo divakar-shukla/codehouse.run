@@ -41,3 +41,12 @@ export const pollBatchResult = async (tokens) => {
     await sleep(100);
   }
 };
+
+export const getJudgeLanguageName = (languageId) => {
+  const languageNameMap = {
+    71: "PYTHON",
+    62: "JAVA",
+    63: "JAVASCRIPT",
+  };
+  return languageNameMap[languageId];
+};

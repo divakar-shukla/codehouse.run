@@ -5009,6 +5009,7 @@ export namespace Prisma {
     passed: boolean | null
     stdin: string | null
     stdout: string | null
+    expected: string | null
     stderr: string | null
     compileOutput: string | null
     status: string | null
@@ -5023,6 +5024,7 @@ export namespace Prisma {
     passed: boolean | null
     stdin: string | null
     stdout: string | null
+    expected: string | null
     stderr: string | null
     compileOutput: string | null
     status: string | null
@@ -5037,6 +5039,7 @@ export namespace Prisma {
     passed: number
     stdin: number
     stdout: number
+    expected: number
     stderr: number
     compileOutput: number
     status: number
@@ -5061,6 +5064,7 @@ export namespace Prisma {
     passed?: true
     stdin?: true
     stdout?: true
+    expected?: true
     stderr?: true
     compileOutput?: true
     status?: true
@@ -5075,6 +5079,7 @@ export namespace Prisma {
     passed?: true
     stdin?: true
     stdout?: true
+    expected?: true
     stderr?: true
     compileOutput?: true
     status?: true
@@ -5089,6 +5094,7 @@ export namespace Prisma {
     passed?: true
     stdin?: true
     stdout?: true
+    expected?: true
     stderr?: true
     compileOutput?: true
     status?: true
@@ -5190,6 +5196,7 @@ export namespace Prisma {
     passed: boolean
     stdin: string | null
     stdout: string | null
+    expected: string
     stderr: string | null
     compileOutput: string | null
     status: string
@@ -5223,6 +5230,7 @@ export namespace Prisma {
     passed?: boolean
     stdin?: boolean
     stdout?: boolean
+    expected?: boolean
     stderr?: boolean
     compileOutput?: boolean
     status?: boolean
@@ -5238,6 +5246,7 @@ export namespace Prisma {
     passed?: boolean
     stdin?: boolean
     stdout?: boolean
+    expected?: boolean
     stderr?: boolean
     compileOutput?: boolean
     status?: boolean
@@ -5253,6 +5262,7 @@ export namespace Prisma {
     passed?: boolean
     stdin?: boolean
     stdout?: boolean
+    expected?: boolean
     stderr?: boolean
     compileOutput?: boolean
     status?: boolean
@@ -5268,6 +5278,7 @@ export namespace Prisma {
     passed?: boolean
     stdin?: boolean
     stdout?: boolean
+    expected?: boolean
     stderr?: boolean
     compileOutput?: boolean
     status?: boolean
@@ -5275,7 +5286,7 @@ export namespace Prisma {
     time?: boolean
   }
 
-  export type TestCaseResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "testCase" | "passed" | "stdin" | "stdout" | "stderr" | "compileOutput" | "status" | "memory" | "time", ExtArgs["result"]["testCaseResult"]>
+  export type TestCaseResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "submissionId" | "testCase" | "passed" | "stdin" | "stdout" | "expected" | "stderr" | "compileOutput" | "status" | "memory" | "time", ExtArgs["result"]["testCaseResult"]>
   export type TestCaseResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     submission?: boolean | SubmissionDefaultArgs<ExtArgs>
   }
@@ -5298,6 +5309,7 @@ export namespace Prisma {
       passed: boolean
       stdin: string | null
       stdout: string | null
+      expected: string
       stderr: string | null
       compileOutput: string | null
       status: string
@@ -5733,6 +5745,7 @@ export namespace Prisma {
     readonly passed: FieldRef<"TestCaseResult", 'Boolean'>
     readonly stdin: FieldRef<"TestCaseResult", 'String'>
     readonly stdout: FieldRef<"TestCaseResult", 'String'>
+    readonly expected: FieldRef<"TestCaseResult", 'String'>
     readonly stderr: FieldRef<"TestCaseResult", 'String'>
     readonly compileOutput: FieldRef<"TestCaseResult", 'String'>
     readonly status: FieldRef<"TestCaseResult", 'String'>
@@ -7294,6 +7307,7 @@ export namespace Prisma {
     passed: 'passed',
     stdin: 'stdin',
     stdout: 'stdout',
+    expected: 'expected',
     stderr: 'stderr',
     compileOutput: 'compileOutput',
     status: 'status',
@@ -7771,6 +7785,7 @@ export namespace Prisma {
     passed?: BoolFilter<"TestCaseResult"> | boolean
     stdin?: StringNullableFilter<"TestCaseResult"> | string | null
     stdout?: StringNullableFilter<"TestCaseResult"> | string | null
+    expected?: StringFilter<"TestCaseResult"> | string
     stderr?: StringNullableFilter<"TestCaseResult"> | string | null
     compileOutput?: StringNullableFilter<"TestCaseResult"> | string | null
     status?: StringFilter<"TestCaseResult"> | string
@@ -7786,6 +7801,7 @@ export namespace Prisma {
     passed?: SortOrder
     stdin?: SortOrderInput | SortOrder
     stdout?: SortOrderInput | SortOrder
+    expected?: SortOrder
     stderr?: SortOrderInput | SortOrder
     compileOutput?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -7804,6 +7820,7 @@ export namespace Prisma {
     passed?: BoolFilter<"TestCaseResult"> | boolean
     stdin?: StringNullableFilter<"TestCaseResult"> | string | null
     stdout?: StringNullableFilter<"TestCaseResult"> | string | null
+    expected?: StringFilter<"TestCaseResult"> | string
     stderr?: StringNullableFilter<"TestCaseResult"> | string | null
     compileOutput?: StringNullableFilter<"TestCaseResult"> | string | null
     status?: StringFilter<"TestCaseResult"> | string
@@ -7819,6 +7836,7 @@ export namespace Prisma {
     passed?: SortOrder
     stdin?: SortOrderInput | SortOrder
     stdout?: SortOrderInput | SortOrder
+    expected?: SortOrder
     stderr?: SortOrderInput | SortOrder
     compileOutput?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -7841,6 +7859,7 @@ export namespace Prisma {
     passed?: BoolWithAggregatesFilter<"TestCaseResult"> | boolean
     stdin?: StringNullableWithAggregatesFilter<"TestCaseResult"> | string | null
     stdout?: StringNullableWithAggregatesFilter<"TestCaseResult"> | string | null
+    expected?: StringWithAggregatesFilter<"TestCaseResult"> | string
     stderr?: StringNullableWithAggregatesFilter<"TestCaseResult"> | string | null
     compileOutput?: StringNullableWithAggregatesFilter<"TestCaseResult"> | string | null
     status?: StringWithAggregatesFilter<"TestCaseResult"> | string
@@ -8256,6 +8275,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -8271,6 +8291,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -8284,6 +8305,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -8299,6 +8321,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -8313,6 +8336,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -8326,6 +8350,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -8340,6 +8365,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -8792,6 +8818,7 @@ export namespace Prisma {
     passed?: SortOrder
     stdin?: SortOrder
     stdout?: SortOrder
+    expected?: SortOrder
     stderr?: SortOrder
     compileOutput?: SortOrder
     status?: SortOrder
@@ -8810,6 +8837,7 @@ export namespace Prisma {
     passed?: SortOrder
     stdin?: SortOrder
     stdout?: SortOrder
+    expected?: SortOrder
     stderr?: SortOrder
     compileOutput?: SortOrder
     status?: SortOrder
@@ -8824,6 +8852,7 @@ export namespace Prisma {
     passed?: SortOrder
     stdin?: SortOrder
     stdout?: SortOrder
+    expected?: SortOrder
     stderr?: SortOrder
     compileOutput?: SortOrder
     status?: SortOrder
@@ -9935,6 +9964,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -9948,6 +9978,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -10077,6 +10108,7 @@ export namespace Prisma {
     passed?: BoolFilter<"TestCaseResult"> | boolean
     stdin?: StringNullableFilter<"TestCaseResult"> | string | null
     stdout?: StringNullableFilter<"TestCaseResult"> | string | null
+    expected?: StringFilter<"TestCaseResult"> | string
     stderr?: StringNullableFilter<"TestCaseResult"> | string | null
     compileOutput?: StringNullableFilter<"TestCaseResult"> | string | null
     status?: StringFilter<"TestCaseResult"> | string
@@ -10594,6 +10626,7 @@ export namespace Prisma {
     passed: boolean
     stdin?: string | null
     stdout?: string | null
+    expected: string
     stderr?: string | null
     compileOutput?: string | null
     status: string
@@ -10607,6 +10640,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -10620,6 +10654,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
@@ -10633,6 +10668,7 @@ export namespace Prisma {
     passed?: BoolFieldUpdateOperationsInput | boolean
     stdin?: NullableStringFieldUpdateOperationsInput | string | null
     stdout?: NullableStringFieldUpdateOperationsInput | string | null
+    expected?: StringFieldUpdateOperationsInput | string
     stderr?: NullableStringFieldUpdateOperationsInput | string | null
     compileOutput?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
