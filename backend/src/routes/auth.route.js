@@ -4,11 +4,11 @@ import {
   login,
   logOut,
   profile,
-} from "../controllers/auth-controller.js";
+} from "../controllers/auth.controller.js";
 import {
   registerValidator,
   loginValidator,
-} from "../validator/authValidator.js";
+} from "../validator/auth.Validator.js";
 import validate from "../middleware/validator-middleware.js";
 import isLogin from "../middleware/login.middleware.js";
 

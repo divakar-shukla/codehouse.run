@@ -27,6 +27,7 @@ const isLogin = async (req, res, next) => {
   });
 
   req.user = loggedinUser;
+  // console.log(req.user)
   next();
 };
 

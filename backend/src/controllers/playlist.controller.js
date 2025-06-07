@@ -5,10 +5,10 @@ import ApiResponse from "../utills/api-response.js";
 
 const createPlaylist = asyncHandler(async (req, res) => {
     const {name, description} = req.body;
-    const userId = req.user.userId
+    const userId = req.user.id
 
   try {
-      const newPlaylist = db.playList.create({
+      const newPlaylist = await db.playList.create({
           data:{
               name,
               description,
@@ -23,12 +23,12 @@ const createPlaylist = asyncHandler(async (req, res) => {
 
 });
 const getAllPlaylistDetails = asyncHandler(async (req, res) => {
-    const playLists = await db.playlist.findMany({
+    const playLists = await db.playList.findMany({
       where: {
         userId: req.user.id,
       },
       include: {
-        problems: {
+        problem: {
           include: {
             problem: true,
           },
@@ -46,10 +46,10 @@ const getPlaylistDetails = asyncHandler(async (req, res) => {
 
       const { playlistId } = req.params;
 
-      const playList = await db.playlist.findUnique({
+      const playList = await db.playList.findUnique({
         where: { id: playlistId, userId: req.user.id },
         include: {
-          problems: {
+          problem: {
             include: {
               problem: true,
             },
@@ -77,7 +77,8 @@ const addProblemToPlaylist = asyncHandler(async (req, res) => {
 const deletePlayList = asyncHandler(async (req, res) => {
 
   const { playlistId } = req.params;
-   const deletedPlaylist = await db.playlist.delete({
+  
+   const deletedPlaylist = await db.playList.delete({
       where: {
         id: playlistId,
       },
@@ -86,11 +87,12 @@ const deletePlayList = asyncHandler(async (req, res) => {
 });
 const removeProblemFromPlaylist = asyncHandler(async (req, res) => {
 
-  const { playlistId } = req.params;
+  const { playListId } = req.params;
   const { problemIds } = req.body;
+
   const deletedProblem = await db.problemInPlaylist.deleteMany({
       where: {
-        playlistId,
+        playListId,
         problemId: {
           in: problemIds,
         },

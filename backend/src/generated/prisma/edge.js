@@ -261,11 +261,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://leetlabuser:leetlabpassword@localhost:5432/postgres"
+        "value": null
       }
     }
   },

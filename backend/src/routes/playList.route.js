@@ -1,12 +1,12 @@
 import express from "express";
-import isLogin from "../middleware/login.middleware";
-import { addProblemToPlaylist, createPlaylist, deletePlayList, getAllPlaylistDetails, getPlaylistDetails, removeProblemFromPlaylist } from "../controllers/playlist.controller";
+import isLogin from "../middleware/login.middleware.js";
+import { addProblemToPlaylist, createPlaylist, deletePlayList, getAllPlaylistDetails, getPlaylistDetails, removeProblemFromPlaylist } from "../controllers/playlist.controller.js";
 
 const playListRoute = express.Router();
 playListRoute.route("/").get(isLogin, getAllPlaylistDetails)
 playListRoute.route("/:playlistId").get(isLogin, getPlaylistDetails)
-playListRoute.route("/create-playlist").get(isLogin, createPlaylist)
-playListRoute.route("/:playlistId/add-problem").get(isLogin, addProblemToPlaylist)
-playListRoute.route("/:playlistId").get(isLogin, deletePlayList)
-playListRoute.route("/:playlistId/remove-problem").get(isLogin, removeProblemFromPlaylist)
+playListRoute.route("/create-playlist").post(isLogin, createPlaylist)
+playListRoute.route("/:playlistId/add-problem").post(isLogin, addProblemToPlaylist)
+playListRoute.route("/:playlistId").delete(isLogin, deletePlayList)
+playListRoute.route("/:playListId/remove-problem").delete(isLogin, removeProblemFromPlaylist)
 export default playListRoute;

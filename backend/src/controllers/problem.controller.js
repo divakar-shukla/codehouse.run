@@ -47,7 +47,6 @@ const createProblem = asyncHandler(async (req, res) => {
     const tokens = await submitBatch(submissions);
 
     const batchResults = await pollBatchResult(tokens);
-    console.log(batchResults);
 
     for (let i = 0; i < batchResults.length; i++) {
       const batchResult = batchResults[i];
@@ -147,7 +146,6 @@ const updateProblem = asyncHandler(async (req, res) => {
     const tokens = await submitBatch(submissions);
 
     const batchResults = await pollBatchResult(tokens);
-    console.log(batchResults);
 
     for (let i = 0; i < batchResults.length; i++) {
       const batchResult = batchResults[i];
