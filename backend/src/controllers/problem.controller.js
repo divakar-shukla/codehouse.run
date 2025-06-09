@@ -84,7 +84,7 @@ const createProblem = asyncHandler(async (req, res) => {
 });
 const getAllProblems = asyncHandler(async (req, res) => {
   const problems = await db.problem.findMany();
-  if (!problems) {
+  if (!problems.length) {
     throw new ApiError(404, "Problems not found");
   }
 

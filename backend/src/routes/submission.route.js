@@ -5,15 +5,27 @@ import {
   getAllSubmissionsForProblem,
   getSubmissionForProblem,
 } from "../controllers/submission.controller.js";
+import getSubmissionAndCountValidator from "../validator/submission.validator.js";
+import validate from "../middleware/validator-middleware.js";
 
 const submissionRoutes = express.Router();
 
 submissionRoutes.route("/get-all-submisssions").get(isLogin, getAllSubmission);
 submissionRoutes
   .route("/get-submisssion/:problemId")
-  .get(isLogin, getSubmissionForProblem);
+  .get(
+    getSubmissionAndCountValidator(),
+    validate,
+    isLogin,
+    getSubmissionForProblem,
+  );
 submissionRoutes
   .route("/get-submissions-count/:problemId")
-  .get(isLogin, getAllSubmissionsForProblem);
+  .get(
+    getSubmissionAndCountValidator(),
+    validate,
+    isLogin,
+    getAllSubmissionsForProblem,
+  );
 
 export default submissionRoutes;
