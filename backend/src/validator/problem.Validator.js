@@ -43,12 +43,6 @@ const createProblemValidator = () => {
             throw new Error(`examples.${key}.output must be a string`);
           }
 
-          if (
-            typeof entry.explanation !== "string" ||
-            entry.explanation.trim() == ""
-          ) {
-            throw new Error(`examples.${key}.explanation must be a string`);
-          }
         }
 
         return true;
@@ -64,7 +58,7 @@ const createProblemValidator = () => {
     body("editorial").optional().trim(),
 
     body("testcases")
-      .isArray({ min: 3, max: 5 })
+      .isArray({ max: 5 })
       .withMessage("min 3 and max 5 testcase are allowed"),
 
     body("referenceSolutions")
@@ -170,13 +164,6 @@ const updateProblemValidator = () => {
           if (typeof entry.output !== "string" || entry.output.trim() == "") {
             throw new Error(`examples.${key}.output must be a string`);
           }
-
-          if (
-            typeof entry.explanation !== "string" ||
-            entry.explanation.trim() == ""
-          ) {
-            throw new Error(`examples.${key}.explanation must be a string`);
-          }
         }
 
         return true;
@@ -192,7 +179,7 @@ const updateProblemValidator = () => {
     body("editorial").optional().trim(),
 
     body("testcases")
-      .isArray({ min: 3, max: 5 })
+      .isArray({ max: 5 })
       .withMessage("min 3 and max 5 testcase are allowed"),
 
     body("referenceSolutions")

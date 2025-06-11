@@ -1,6 +1,5 @@
 import express from "express";
-import isLogin from "../middleware/login.middleware.js";
-import {
+import isLogin from "../middleware/login.middleware.js";import {
   addProblemToPlaylist,
   createPlaylist,
   deletePlayList,
@@ -8,12 +7,13 @@ import {
   getPlaylistDetails,
   removeProblemFromPlaylist,
 } from "../controllers/playlist.controller.js";
-import {
-  addRemoveProblemToPlaylistValidator,
-  createPlaylistValidator,
-  getDeletePlaylistValidator,
-} from "../validator/playlist.validator.js";
+// import {
+//   addRemoveProblemToPlaylistValidator,
+//   createPlaylistValidator,
+//   getDeletePlaylistValidator,
+// } from ".../validator/playlist.Validator.js";
 import validate from "../middleware/validator-middleware.js";
+import { addRemoveProblemToPlaylistValidator, createPlaylistValidator, getDeletePlaylistValidator } from "../validator/playlist.validator.js";
 
 const playListRoute = express.Router();
 playListRoute.route("/").get(isLogin, getAllPlaylistDetails);
@@ -42,4 +42,5 @@ playListRoute
     isLogin,
     removeProblemFromPlaylist,
   );
+
 export default playListRoute;
