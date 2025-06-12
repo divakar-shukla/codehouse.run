@@ -5,19 +5,21 @@ import db from "../lib/db.js";
 import bcrypt from "bcryptjs";
 import { UserRole } from "../generated/prisma/index.js";
 import jwt from "jsonwebtoken";
-
+//  where: {
+//       OR: [{ username }, { email }],
+//     },
 const register = asyncHandler(async (req, res) => {
-  const { email, username, password, avatar, role } = req.body;
+  const { email, name, password, avatar, role } = req.body;
 
   const userRole = role || UserRole.USER;
   const existingUser = await db.user.findFirst({
     where: {
-      OR: [{ username }, { email }],
+       email
     },
   });
 
   if (existingUser) {
-    throw new ApiError(400, "User with email or username already exists", []);
+    throw new ApiError(400, "User with email already exists", []);
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   let newUser;
@@ -26,7 +28,7 @@ const register = asyncHandler(async (req, res) => {
     newUser = await db.user.create({
       data: {
         email: email,
-        username: username,
+        name: name,
         password: hashedPassword,
         avatar: avatar,
         role: userRole,
@@ -34,7 +36,7 @@ const register = asyncHandler(async (req, res) => {
       select: {
         id: true,
         email: true,
-        username: true,
+        name: true,
         avatar: true,
         role: true,
       },
@@ -66,19 +68,16 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const login = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username && !email) {
-    throw new ApiError(400, "Usename or Email is required");
-  }
-
+  const { name, email, password } = req.body;
+ 
   const user = await db.user.findFirst({
     where: {
-      OR: [{ username }, { email }],
+     email ,
     },
     select: {
       id: true,
       email: true,
-      username: true,
+      name: true,
       password: true,
       avatar: true,
       role: true,
@@ -127,7 +126,7 @@ const profile = asyncHandler(async (req, res) => {
     },
     select: {
       id: true,
-      username: true,
+      name: true,
       email: true,
       role: true,
       avatar: true,

@@ -8,29 +8,30 @@ import {
   EyeOff,
   Loader2,
   Lock,
-  LogIn,
   Mail,
 } from "lucide-react";
 import {z} from "zod"
 import AuthImagePattern from '../components/AuthImagePattern';
-import { useAuthStore } from '../store/useAuthStore';
+import {useAuthStore} from "../store/useAuthStore"
 
-const loginSchema = z.object({
+
+const registerSchema = z.object({
     email:z.string().email("Enter a valid email"),
     password:z.string().min(6, "Password must be atleast 6 charactor long"),
-    // name:z.string().min(3, "Name must be atleast 3 charactor long")
+    name:z.string().min(3, "Name must be atleast 3 charactor long")
 })
 
-const Login = () => {
-  const {login, isLoging} = useAuthStore()
-
+const Register = () => {
     const [showPassword, setShowPassword] = useState(false)
-    const {register, handleSubmit, formState:{errors}} = useForm({resolver:zodResolver(loginSchema)})
+    const {register, handleSubmit, formState:{errors}} = useForm({resolver:zodResolver(registerSchema)})
+    const {signup, isSigningup} = useAuthStore()
     const onSubmit = async (data)=>{
+        console.log(data)
         try {
-          await login(data)
+          await signup(data)
+          // console.log("Register data", data)
         } catch (error) {
-          console.log(error)
+          console.error("Register data", error)
         }
     }
   return (
@@ -44,7 +45,7 @@ const Login = () => {
                 <Code className="w-6 h-6 text-primary" />
               </div>
               <h1 className="text-2xl font-bold mt-2">Welcome </h1>
-              <p className="text-base-content/60">Login your account</p>
+              <p className="text-base-content/60">Register to your account</p>
             </div>
           </div>
 
@@ -52,7 +53,27 @@ const Login = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
             {/* name */}
-            
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Name</span>
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Code className="h-5 w-5 text-base-content/40" />
+                </div>
+                <input
+                  type="text"
+                  {...register("name")}
+                  className={`input input-bordered w-full pl-10 ${
+                    errors.name ? "input-error" : ""
+                  }`}
+                  placeholder="John Doe"
+                />
+              </div>
+              {errors.name && (
+                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+              )}              
+            </div>
 
             {/* Email */}
             <div className="form-control">
@@ -115,15 +136,15 @@ const Login = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
-             disabled={isLoging}
+             disabled={isSigningup}
             >
-               {isLoging ? (
+               {isSigningup ? (
                 <>
                   <Loader2 className="h-5 w-5 animate-spin" />
                   Loading...
                 </>
               ) : (
-                "Login"
+                "Register"
               )}
             </button>
           </form>
@@ -131,9 +152,9 @@ const Login = () => {
           {/* Footer */}
           <div className="text-center">
             <p className="text-base-content/60">
-              I have an account {" "}
-              <Link to="/register" className="link link-primary">
-                Register
+              Already have an account?{" "}
+              <Link to="/login" className="link link-primary">
+                Login
               </Link>
             </p>
           </div>
@@ -144,11 +165,11 @@ const Login = () => {
       <AuthImagePattern
         title={"Welcome to our platform!"}
         subtitle={
-          "Login up to access our platform and start using our services."
+          "Register to access our platform and start using our services."
         }
       />
     </div>
   )
 }
 
-export default Login
+export default Register

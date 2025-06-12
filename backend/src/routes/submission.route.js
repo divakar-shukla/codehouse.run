@@ -5,7 +5,7 @@ import {
   getAllSubmissionsForProblem,
   getSubmissionForProblem,
 } from "../controllers/submission.controller.js";
-import getSubmissionAndCountValidator from "../validator/submission.validator.js";
+import getSubmissionAndCountValidator from "../validator/submission.Validator.js";
 import validate from "../middleware/validator-middleware.js";
 
 const submissionRoutes = express.Router();

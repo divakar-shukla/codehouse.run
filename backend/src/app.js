@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 import healthCheck from "./controllers/healthCheck.controller.js";
 import errorHandler from "./utills/errorHandler.js";
 import authRoutes from "./routes/auth.route.js";
@@ -9,6 +10,10 @@ import submissionRoutes from "./routes/submission.route.js";
 import playListRoute from "./routes/playList.route.js";
 
 const app = express();
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

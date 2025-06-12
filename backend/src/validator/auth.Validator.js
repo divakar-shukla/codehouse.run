@@ -9,14 +9,12 @@ const customAvatarValidator = (value, { req }) => {
 };
 const registerValidator = () => {
   return [
-    body("username")
+    body("name")
       .trim()
       .notEmpty()
-      .withMessage("Username is required")
-      .isLowercase()
-      .withMessage("Username must be lowercase")
+      .withMessage("name is required")
       .isLength({ min: 3 })
-      .withMessage("Username must be atleast 3 characters long"),
+      .withMessage("name must be atleast 3 characters long"),
 
     body("email")
       .trim()
