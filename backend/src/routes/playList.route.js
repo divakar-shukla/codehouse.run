@@ -13,7 +13,7 @@ import isLogin from "../middleware/login.middleware.js";import {
 //   getDeletePlaylistValidator,
 // } from ".../validator/playlist.Validator.js";
 import validate from "../middleware/validator-middleware.js";
-import { addRemoveProblemToPlaylistValidator, createPlaylistValidator, getDeletePlaylistValidator } from "../validator/playlist.validator.js";
+import { addProblemToPlaylistValidator, removeProblemToPlaylistValidator, createPlaylistValidator, getDeletePlaylistValidator } from "../validator/playlist.validator.js";
 
 const playListRoute = express.Router();
 playListRoute.route("/").get(isLogin, getAllPlaylistDetails);
@@ -29,7 +29,7 @@ playListRoute
 playListRoute
   .route("/:playlistId/add-problem")
   .post(
-    addRemoveProblemToPlaylistValidator(),
+    addProblemToPlaylistValidator(),
     validate,
     isLogin,
     addProblemToPlaylist,
@@ -37,7 +37,7 @@ playListRoute
 playListRoute
   .route("/:playlistId/remove-problem")
   .delete(
-    addRemoveProblemToPlaylistValidator(),
+    removeProblemToPlaylistValidator(),
     validate,
     isLogin,
     removeProblemFromPlaylist,

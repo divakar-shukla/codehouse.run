@@ -48,6 +48,11 @@ export type PlayList = $Result.DefaultSelection<Prisma.$PlayListPayload>
  * 
  */
 export type ProblemInPlaylist = $Result.DefaultSelection<Prisma.$ProblemInPlaylistPayload>
+/**
+ * Model FavouriteList
+ * 
+ */
+export type FavouriteList = $Result.DefaultSelection<Prisma.$FavouriteListPayload>
 
 /**
  * Enums
@@ -273,6 +278,16 @@ export class PrismaClient<
     * ```
     */
   get problemInPlaylist(): Prisma.ProblemInPlaylistDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.favouriteList`: Exposes CRUD operations for the **FavouriteList** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FavouriteLists
+    * const favouriteLists = await prisma.favouriteList.findMany()
+    * ```
+    */
+  get favouriteList(): Prisma.FavouriteListDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -719,7 +734,8 @@ export namespace Prisma {
     TestCaseResult: 'TestCaseResult',
     ProblemSolved: 'ProblemSolved',
     PlayList: 'PlayList',
-    ProblemInPlaylist: 'ProblemInPlaylist'
+    ProblemInPlaylist: 'ProblemInPlaylist',
+    FavouriteList: 'FavouriteList'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -738,7 +754,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "problem" | "submission" | "testCaseResult" | "problemSolved" | "playList" | "problemInPlaylist"
+      modelProps: "user" | "problem" | "submission" | "testCaseResult" | "problemSolved" | "playList" | "problemInPlaylist" | "favouriteList"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1260,6 +1276,80 @@ export namespace Prisma {
           }
         }
       }
+      FavouriteList: {
+        payload: Prisma.$FavouriteListPayload<ExtArgs>
+        fields: Prisma.FavouriteListFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FavouriteListFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FavouriteListFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          findFirst: {
+            args: Prisma.FavouriteListFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FavouriteListFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          findMany: {
+            args: Prisma.FavouriteListFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>[]
+          }
+          create: {
+            args: Prisma.FavouriteListCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          createMany: {
+            args: Prisma.FavouriteListCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FavouriteListCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>[]
+          }
+          delete: {
+            args: Prisma.FavouriteListDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          update: {
+            args: Prisma.FavouriteListUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          deleteMany: {
+            args: Prisma.FavouriteListDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FavouriteListUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FavouriteListUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>[]
+          }
+          upsert: {
+            args: Prisma.FavouriteListUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FavouriteListPayload>
+          }
+          aggregate: {
+            args: Prisma.FavouriteListAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFavouriteList>
+          }
+          groupBy: {
+            args: Prisma.FavouriteListGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FavouriteListGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FavouriteListCountArgs<ExtArgs>
+            result: $Utils.Optional<FavouriteListCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1351,6 +1441,7 @@ export namespace Prisma {
     problemSolved?: ProblemSolvedOmit
     playList?: PlayListOmit
     problemInPlaylist?: ProblemInPlaylistOmit
+    favouriteList?: FavouriteListOmit
   }
 
   /* Types for Logging */
@@ -1449,6 +1540,7 @@ export namespace Prisma {
     submission: number
     problemSolved: number
     PlayList: number
+    favouriteList: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1456,6 +1548,7 @@ export namespace Prisma {
     submission?: boolean | UserCountOutputTypeCountSubmissionArgs
     problemSolved?: boolean | UserCountOutputTypeCountProblemSolvedArgs
     PlayList?: boolean | UserCountOutputTypeCountPlayListArgs
+    favouriteList?: boolean | UserCountOutputTypeCountFavouriteListArgs
   }
 
   // Custom InputTypes
@@ -1497,6 +1590,13 @@ export namespace Prisma {
     where?: PlayListWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountFavouriteListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavouriteListWhereInput
+  }
+
 
   /**
    * Count Type ProblemCountOutputType
@@ -1506,12 +1606,14 @@ export namespace Prisma {
     submission: number
     solvedBy: number
     ProblemInPlaylist: number
+    favouriteList: number
   }
 
   export type ProblemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     submission?: boolean | ProblemCountOutputTypeCountSubmissionArgs
     solvedBy?: boolean | ProblemCountOutputTypeCountSolvedByArgs
     ProblemInPlaylist?: boolean | ProblemCountOutputTypeCountProblemInPlaylistArgs
+    favouriteList?: boolean | ProblemCountOutputTypeCountFavouriteListArgs
   }
 
   // Custom InputTypes
@@ -1544,6 +1646,13 @@ export namespace Prisma {
    */
   export type ProblemCountOutputTypeCountProblemInPlaylistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ProblemInPlaylistWhereInput
+  }
+
+  /**
+   * ProblemCountOutputType without action
+   */
+  export type ProblemCountOutputTypeCountFavouriteListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavouriteListWhereInput
   }
 
 
@@ -1805,6 +1914,7 @@ export namespace Prisma {
     submission?: boolean | User$submissionArgs<ExtArgs>
     problemSolved?: boolean | User$problemSolvedArgs<ExtArgs>
     PlayList?: boolean | User$PlayListArgs<ExtArgs>
+    favouriteList?: boolean | User$favouriteListArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1847,6 +1957,7 @@ export namespace Prisma {
     submission?: boolean | User$submissionArgs<ExtArgs>
     problemSolved?: boolean | User$problemSolvedArgs<ExtArgs>
     PlayList?: boolean | User$PlayListArgs<ExtArgs>
+    favouriteList?: boolean | User$favouriteListArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1859,6 +1970,7 @@ export namespace Prisma {
       submission: Prisma.$SubmissionPayload<ExtArgs>[]
       problemSolved: Prisma.$ProblemSolvedPayload<ExtArgs>[]
       PlayList: Prisma.$PlayListPayload<ExtArgs>[]
+      favouriteList: Prisma.$FavouriteListPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2267,6 +2379,7 @@ export namespace Prisma {
     submission<T extends User$submissionArgs<ExtArgs> = {}>(args?: Subset<T, User$submissionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     problemSolved<T extends User$problemSolvedArgs<ExtArgs> = {}>(args?: Subset<T, User$problemSolvedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemSolvedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     PlayList<T extends User$PlayListArgs<ExtArgs> = {}>(args?: Subset<T, User$PlayListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favouriteList<T extends User$favouriteListArgs<ExtArgs> = {}>(args?: Subset<T, User$favouriteListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2788,6 +2901,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.favouriteList
+   */
+  export type User$favouriteListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    where?: FavouriteListWhereInput
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    cursor?: FavouriteListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavouriteListScalarFieldEnum | FavouriteListScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3034,6 +3171,7 @@ export namespace Prisma {
     submission?: boolean | Problem$submissionArgs<ExtArgs>
     solvedBy?: boolean | Problem$solvedByArgs<ExtArgs>
     ProblemInPlaylist?: boolean | Problem$ProblemInPlaylistArgs<ExtArgs>
+    favouriteList?: boolean | Problem$favouriteListArgs<ExtArgs>
     _count?: boolean | ProblemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["problem"]>
 
@@ -3099,6 +3237,7 @@ export namespace Prisma {
     submission?: boolean | Problem$submissionArgs<ExtArgs>
     solvedBy?: boolean | Problem$solvedByArgs<ExtArgs>
     ProblemInPlaylist?: boolean | Problem$ProblemInPlaylistArgs<ExtArgs>
+    favouriteList?: boolean | Problem$favouriteListArgs<ExtArgs>
     _count?: boolean | ProblemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProblemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3115,6 +3254,7 @@ export namespace Prisma {
       submission: Prisma.$SubmissionPayload<ExtArgs>[]
       solvedBy: Prisma.$ProblemSolvedPayload<ExtArgs>[]
       ProblemInPlaylist: Prisma.$ProblemInPlaylistPayload<ExtArgs>[]
+      favouriteList: Prisma.$FavouriteListPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3530,6 +3670,7 @@ export namespace Prisma {
     submission<T extends Problem$submissionArgs<ExtArgs> = {}>(args?: Subset<T, Problem$submissionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     solvedBy<T extends Problem$solvedByArgs<ExtArgs> = {}>(args?: Subset<T, Problem$solvedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemSolvedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ProblemInPlaylist<T extends Problem$ProblemInPlaylistArgs<ExtArgs> = {}>(args?: Subset<T, Problem$ProblemInPlaylistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProblemInPlaylistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    favouriteList<T extends Problem$favouriteListArgs<ExtArgs> = {}>(args?: Subset<T, Problem$favouriteListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4039,6 +4180,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ProblemInPlaylistScalarFieldEnum | ProblemInPlaylistScalarFieldEnum[]
+  }
+
+  /**
+   * Problem.favouriteList
+   */
+  export type Problem$favouriteListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    where?: FavouriteListWhereInput
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    cursor?: FavouriteListWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FavouriteListScalarFieldEnum | FavouriteListScalarFieldEnum[]
   }
 
   /**
@@ -9686,6 +9851,1072 @@ export namespace Prisma {
 
 
   /**
+   * Model FavouriteList
+   */
+
+  export type AggregateFavouriteList = {
+    _count: FavouriteListCountAggregateOutputType | null
+    _min: FavouriteListMinAggregateOutputType | null
+    _max: FavouriteListMaxAggregateOutputType | null
+  }
+
+  export type FavouriteListMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    problemId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FavouriteListMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    problemId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type FavouriteListCountAggregateOutputType = {
+    id: number
+    userId: number
+    problemId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type FavouriteListMinAggregateInputType = {
+    id?: true
+    userId?: true
+    problemId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FavouriteListMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    problemId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type FavouriteListCountAggregateInputType = {
+    id?: true
+    userId?: true
+    problemId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type FavouriteListAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FavouriteList to aggregate.
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FavouriteLists to fetch.
+     */
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FavouriteListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FavouriteLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FavouriteLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FavouriteLists
+    **/
+    _count?: true | FavouriteListCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FavouriteListMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FavouriteListMaxAggregateInputType
+  }
+
+  export type GetFavouriteListAggregateType<T extends FavouriteListAggregateArgs> = {
+        [P in keyof T & keyof AggregateFavouriteList]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFavouriteList[P]>
+      : GetScalarType<T[P], AggregateFavouriteList[P]>
+  }
+
+
+
+
+  export type FavouriteListGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FavouriteListWhereInput
+    orderBy?: FavouriteListOrderByWithAggregationInput | FavouriteListOrderByWithAggregationInput[]
+    by: FavouriteListScalarFieldEnum[] | FavouriteListScalarFieldEnum
+    having?: FavouriteListScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FavouriteListCountAggregateInputType | true
+    _min?: FavouriteListMinAggregateInputType
+    _max?: FavouriteListMaxAggregateInputType
+  }
+
+  export type FavouriteListGroupByOutputType = {
+    id: string
+    userId: string
+    problemId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: FavouriteListCountAggregateOutputType | null
+    _min: FavouriteListMinAggregateOutputType | null
+    _max: FavouriteListMaxAggregateOutputType | null
+  }
+
+  type GetFavouriteListGroupByPayload<T extends FavouriteListGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FavouriteListGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FavouriteListGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FavouriteListGroupByOutputType[P]>
+            : GetScalarType<T[P], FavouriteListGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FavouriteListSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    problemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favouriteList"]>
+
+  export type FavouriteListSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    problemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favouriteList"]>
+
+  export type FavouriteListSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    problemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["favouriteList"]>
+
+  export type FavouriteListSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    problemId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type FavouriteListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "problemId" | "createdAt" | "updatedAt", ExtArgs["result"]["favouriteList"]>
+  export type FavouriteListInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }
+  export type FavouriteListIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }
+  export type FavouriteListIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    User?: boolean | UserDefaultArgs<ExtArgs>
+    Problem?: boolean | ProblemDefaultArgs<ExtArgs>
+  }
+
+  export type $FavouriteListPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FavouriteList"
+    objects: {
+      User: Prisma.$UserPayload<ExtArgs>
+      Problem: Prisma.$ProblemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      problemId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["favouriteList"]>
+    composites: {}
+  }
+
+  type FavouriteListGetPayload<S extends boolean | null | undefined | FavouriteListDefaultArgs> = $Result.GetResult<Prisma.$FavouriteListPayload, S>
+
+  type FavouriteListCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FavouriteListFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FavouriteListCountAggregateInputType | true
+    }
+
+  export interface FavouriteListDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FavouriteList'], meta: { name: 'FavouriteList' } }
+    /**
+     * Find zero or one FavouriteList that matches the filter.
+     * @param {FavouriteListFindUniqueArgs} args - Arguments to find a FavouriteList
+     * @example
+     * // Get one FavouriteList
+     * const favouriteList = await prisma.favouriteList.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FavouriteListFindUniqueArgs>(args: SelectSubset<T, FavouriteListFindUniqueArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one FavouriteList that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FavouriteListFindUniqueOrThrowArgs} args - Arguments to find a FavouriteList
+     * @example
+     * // Get one FavouriteList
+     * const favouriteList = await prisma.favouriteList.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FavouriteListFindUniqueOrThrowArgs>(args: SelectSubset<T, FavouriteListFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FavouriteList that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListFindFirstArgs} args - Arguments to find a FavouriteList
+     * @example
+     * // Get one FavouriteList
+     * const favouriteList = await prisma.favouriteList.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FavouriteListFindFirstArgs>(args?: SelectSubset<T, FavouriteListFindFirstArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first FavouriteList that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListFindFirstOrThrowArgs} args - Arguments to find a FavouriteList
+     * @example
+     * // Get one FavouriteList
+     * const favouriteList = await prisma.favouriteList.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FavouriteListFindFirstOrThrowArgs>(args?: SelectSubset<T, FavouriteListFindFirstOrThrowArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more FavouriteLists that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FavouriteLists
+     * const favouriteLists = await prisma.favouriteList.findMany()
+     * 
+     * // Get first 10 FavouriteLists
+     * const favouriteLists = await prisma.favouriteList.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const favouriteListWithIdOnly = await prisma.favouriteList.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FavouriteListFindManyArgs>(args?: SelectSubset<T, FavouriteListFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a FavouriteList.
+     * @param {FavouriteListCreateArgs} args - Arguments to create a FavouriteList.
+     * @example
+     * // Create one FavouriteList
+     * const FavouriteList = await prisma.favouriteList.create({
+     *   data: {
+     *     // ... data to create a FavouriteList
+     *   }
+     * })
+     * 
+     */
+    create<T extends FavouriteListCreateArgs>(args: SelectSubset<T, FavouriteListCreateArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many FavouriteLists.
+     * @param {FavouriteListCreateManyArgs} args - Arguments to create many FavouriteLists.
+     * @example
+     * // Create many FavouriteLists
+     * const favouriteList = await prisma.favouriteList.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FavouriteListCreateManyArgs>(args?: SelectSubset<T, FavouriteListCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FavouriteLists and returns the data saved in the database.
+     * @param {FavouriteListCreateManyAndReturnArgs} args - Arguments to create many FavouriteLists.
+     * @example
+     * // Create many FavouriteLists
+     * const favouriteList = await prisma.favouriteList.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FavouriteLists and only return the `id`
+     * const favouriteListWithIdOnly = await prisma.favouriteList.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FavouriteListCreateManyAndReturnArgs>(args?: SelectSubset<T, FavouriteListCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a FavouriteList.
+     * @param {FavouriteListDeleteArgs} args - Arguments to delete one FavouriteList.
+     * @example
+     * // Delete one FavouriteList
+     * const FavouriteList = await prisma.favouriteList.delete({
+     *   where: {
+     *     // ... filter to delete one FavouriteList
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FavouriteListDeleteArgs>(args: SelectSubset<T, FavouriteListDeleteArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one FavouriteList.
+     * @param {FavouriteListUpdateArgs} args - Arguments to update one FavouriteList.
+     * @example
+     * // Update one FavouriteList
+     * const favouriteList = await prisma.favouriteList.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FavouriteListUpdateArgs>(args: SelectSubset<T, FavouriteListUpdateArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more FavouriteLists.
+     * @param {FavouriteListDeleteManyArgs} args - Arguments to filter FavouriteLists to delete.
+     * @example
+     * // Delete a few FavouriteLists
+     * const { count } = await prisma.favouriteList.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FavouriteListDeleteManyArgs>(args?: SelectSubset<T, FavouriteListDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FavouriteLists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FavouriteLists
+     * const favouriteList = await prisma.favouriteList.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FavouriteListUpdateManyArgs>(args: SelectSubset<T, FavouriteListUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FavouriteLists and returns the data updated in the database.
+     * @param {FavouriteListUpdateManyAndReturnArgs} args - Arguments to update many FavouriteLists.
+     * @example
+     * // Update many FavouriteLists
+     * const favouriteList = await prisma.favouriteList.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FavouriteLists and only return the `id`
+     * const favouriteListWithIdOnly = await prisma.favouriteList.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FavouriteListUpdateManyAndReturnArgs>(args: SelectSubset<T, FavouriteListUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one FavouriteList.
+     * @param {FavouriteListUpsertArgs} args - Arguments to update or create a FavouriteList.
+     * @example
+     * // Update or create a FavouriteList
+     * const favouriteList = await prisma.favouriteList.upsert({
+     *   create: {
+     *     // ... data to create a FavouriteList
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FavouriteList we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FavouriteListUpsertArgs>(args: SelectSubset<T, FavouriteListUpsertArgs<ExtArgs>>): Prisma__FavouriteListClient<$Result.GetResult<Prisma.$FavouriteListPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of FavouriteLists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListCountArgs} args - Arguments to filter FavouriteLists to count.
+     * @example
+     * // Count the number of FavouriteLists
+     * const count = await prisma.favouriteList.count({
+     *   where: {
+     *     // ... the filter for the FavouriteLists we want to count
+     *   }
+     * })
+    **/
+    count<T extends FavouriteListCountArgs>(
+      args?: Subset<T, FavouriteListCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FavouriteListCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FavouriteList.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FavouriteListAggregateArgs>(args: Subset<T, FavouriteListAggregateArgs>): Prisma.PrismaPromise<GetFavouriteListAggregateType<T>>
+
+    /**
+     * Group by FavouriteList.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FavouriteListGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FavouriteListGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FavouriteListGroupByArgs['orderBy'] }
+        : { orderBy?: FavouriteListGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FavouriteListGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFavouriteListGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FavouriteList model
+   */
+  readonly fields: FavouriteListFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FavouriteList.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FavouriteListClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    User<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    Problem<T extends ProblemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProblemDefaultArgs<ExtArgs>>): Prisma__ProblemClient<$Result.GetResult<Prisma.$ProblemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FavouriteList model
+   */
+  interface FavouriteListFieldRefs {
+    readonly id: FieldRef<"FavouriteList", 'String'>
+    readonly userId: FieldRef<"FavouriteList", 'String'>
+    readonly problemId: FieldRef<"FavouriteList", 'String'>
+    readonly createdAt: FieldRef<"FavouriteList", 'DateTime'>
+    readonly updatedAt: FieldRef<"FavouriteList", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FavouriteList findUnique
+   */
+  export type FavouriteListFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter, which FavouriteList to fetch.
+     */
+    where: FavouriteListWhereUniqueInput
+  }
+
+  /**
+   * FavouriteList findUniqueOrThrow
+   */
+  export type FavouriteListFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter, which FavouriteList to fetch.
+     */
+    where: FavouriteListWhereUniqueInput
+  }
+
+  /**
+   * FavouriteList findFirst
+   */
+  export type FavouriteListFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter, which FavouriteList to fetch.
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FavouriteLists to fetch.
+     */
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FavouriteLists.
+     */
+    cursor?: FavouriteListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FavouriteLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FavouriteLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FavouriteLists.
+     */
+    distinct?: FavouriteListScalarFieldEnum | FavouriteListScalarFieldEnum[]
+  }
+
+  /**
+   * FavouriteList findFirstOrThrow
+   */
+  export type FavouriteListFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter, which FavouriteList to fetch.
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FavouriteLists to fetch.
+     */
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FavouriteLists.
+     */
+    cursor?: FavouriteListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FavouriteLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FavouriteLists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FavouriteLists.
+     */
+    distinct?: FavouriteListScalarFieldEnum | FavouriteListScalarFieldEnum[]
+  }
+
+  /**
+   * FavouriteList findMany
+   */
+  export type FavouriteListFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter, which FavouriteLists to fetch.
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FavouriteLists to fetch.
+     */
+    orderBy?: FavouriteListOrderByWithRelationInput | FavouriteListOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FavouriteLists.
+     */
+    cursor?: FavouriteListWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FavouriteLists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FavouriteLists.
+     */
+    skip?: number
+    distinct?: FavouriteListScalarFieldEnum | FavouriteListScalarFieldEnum[]
+  }
+
+  /**
+   * FavouriteList create
+   */
+  export type FavouriteListCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FavouriteList.
+     */
+    data: XOR<FavouriteListCreateInput, FavouriteListUncheckedCreateInput>
+  }
+
+  /**
+   * FavouriteList createMany
+   */
+  export type FavouriteListCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FavouriteLists.
+     */
+    data: FavouriteListCreateManyInput | FavouriteListCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FavouriteList createManyAndReturn
+   */
+  export type FavouriteListCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * The data used to create many FavouriteLists.
+     */
+    data: FavouriteListCreateManyInput | FavouriteListCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FavouriteList update
+   */
+  export type FavouriteListUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FavouriteList.
+     */
+    data: XOR<FavouriteListUpdateInput, FavouriteListUncheckedUpdateInput>
+    /**
+     * Choose, which FavouriteList to update.
+     */
+    where: FavouriteListWhereUniqueInput
+  }
+
+  /**
+   * FavouriteList updateMany
+   */
+  export type FavouriteListUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FavouriteLists.
+     */
+    data: XOR<FavouriteListUpdateManyMutationInput, FavouriteListUncheckedUpdateManyInput>
+    /**
+     * Filter which FavouriteLists to update
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * Limit how many FavouriteLists to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FavouriteList updateManyAndReturn
+   */
+  export type FavouriteListUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * The data used to update FavouriteLists.
+     */
+    data: XOR<FavouriteListUpdateManyMutationInput, FavouriteListUncheckedUpdateManyInput>
+    /**
+     * Filter which FavouriteLists to update
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * Limit how many FavouriteLists to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FavouriteList upsert
+   */
+  export type FavouriteListUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FavouriteList to update in case it exists.
+     */
+    where: FavouriteListWhereUniqueInput
+    /**
+     * In case the FavouriteList found by the `where` argument doesn't exist, create a new FavouriteList with this data.
+     */
+    create: XOR<FavouriteListCreateInput, FavouriteListUncheckedCreateInput>
+    /**
+     * In case the FavouriteList was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FavouriteListUpdateInput, FavouriteListUncheckedUpdateInput>
+  }
+
+  /**
+   * FavouriteList delete
+   */
+  export type FavouriteListDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+    /**
+     * Filter which FavouriteList to delete.
+     */
+    where: FavouriteListWhereUniqueInput
+  }
+
+  /**
+   * FavouriteList deleteMany
+   */
+  export type FavouriteListDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FavouriteLists to delete
+     */
+    where?: FavouriteListWhereInput
+    /**
+     * Limit how many FavouriteLists to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * FavouriteList without action
+   */
+  export type FavouriteListDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FavouriteList
+     */
+    select?: FavouriteListSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FavouriteList
+     */
+    omit?: FavouriteListOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FavouriteListInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9804,6 +11035,17 @@ export namespace Prisma {
   };
 
   export type ProblemInPlaylistScalarFieldEnum = (typeof ProblemInPlaylistScalarFieldEnum)[keyof typeof ProblemInPlaylistScalarFieldEnum]
+
+
+  export const FavouriteListScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    problemId: 'problemId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type FavouriteListScalarFieldEnum = (typeof FavouriteListScalarFieldEnum)[keyof typeof FavouriteListScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -9975,6 +11217,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
     PlayList?: PlayListListRelationFilter
+    favouriteList?: FavouriteListListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9990,6 +11233,7 @@ export namespace Prisma {
     submission?: SubmissionOrderByRelationAggregateInput
     problemSolved?: ProblemSolvedOrderByRelationAggregateInput
     PlayList?: PlayListOrderByRelationAggregateInput
+    favouriteList?: FavouriteListOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10008,6 +11252,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     problemSolved?: ProblemSolvedListRelationFilter
     PlayList?: PlayListListRelationFilter
+    favouriteList?: FavouriteListListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -10061,6 +11306,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     solvedBy?: ProblemSolvedListRelationFilter
     ProblemInPlaylist?: ProblemInPlaylistListRelationFilter
+    favouriteList?: FavouriteListListRelationFilter
   }
 
   export type ProblemOrderByWithRelationInput = {
@@ -10083,6 +11329,7 @@ export namespace Prisma {
     submission?: SubmissionOrderByRelationAggregateInput
     solvedBy?: ProblemSolvedOrderByRelationAggregateInput
     ProblemInPlaylist?: ProblemInPlaylistOrderByRelationAggregateInput
+    favouriteList?: FavouriteListOrderByRelationAggregateInput
   }
 
   export type ProblemWhereUniqueInput = Prisma.AtLeast<{
@@ -10108,6 +11355,7 @@ export namespace Prisma {
     submission?: SubmissionListRelationFilter
     solvedBy?: ProblemSolvedListRelationFilter
     ProblemInPlaylist?: ProblemInPlaylistListRelationFilter
+    favouriteList?: FavouriteListListRelationFilter
   }, "id">
 
   export type ProblemOrderByWithAggregationInput = {
@@ -10532,6 +11780,64 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ProblemInPlaylist"> | Date | string
   }
 
+  export type FavouriteListWhereInput = {
+    AND?: FavouriteListWhereInput | FavouriteListWhereInput[]
+    OR?: FavouriteListWhereInput[]
+    NOT?: FavouriteListWhereInput | FavouriteListWhereInput[]
+    id?: StringFilter<"FavouriteList"> | string
+    userId?: StringFilter<"FavouriteList"> | string
+    problemId?: StringFilter<"FavouriteList"> | string
+    createdAt?: DateTimeFilter<"FavouriteList"> | Date | string
+    updatedAt?: DateTimeFilter<"FavouriteList"> | Date | string
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Problem?: XOR<ProblemScalarRelationFilter, ProblemWhereInput>
+  }
+
+  export type FavouriteListOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    problemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    User?: UserOrderByWithRelationInput
+    Problem?: ProblemOrderByWithRelationInput
+  }
+
+  export type FavouriteListWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    problemId?: string
+    AND?: FavouriteListWhereInput | FavouriteListWhereInput[]
+    OR?: FavouriteListWhereInput[]
+    NOT?: FavouriteListWhereInput | FavouriteListWhereInput[]
+    userId?: StringFilter<"FavouriteList"> | string
+    createdAt?: DateTimeFilter<"FavouriteList"> | Date | string
+    updatedAt?: DateTimeFilter<"FavouriteList"> | Date | string
+    User?: XOR<UserScalarRelationFilter, UserWhereInput>
+    Problem?: XOR<ProblemScalarRelationFilter, ProblemWhereInput>
+  }, "id" | "problemId">
+
+  export type FavouriteListOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    problemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: FavouriteListCountOrderByAggregateInput
+    _max?: FavouriteListMaxOrderByAggregateInput
+    _min?: FavouriteListMinOrderByAggregateInput
+  }
+
+  export type FavouriteListScalarWhereWithAggregatesInput = {
+    AND?: FavouriteListScalarWhereWithAggregatesInput | FavouriteListScalarWhereWithAggregatesInput[]
+    OR?: FavouriteListScalarWhereWithAggregatesInput[]
+    NOT?: FavouriteListScalarWhereWithAggregatesInput | FavouriteListScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FavouriteList"> | string
+    userId?: StringWithAggregatesFilter<"FavouriteList"> | string
+    problemId?: StringWithAggregatesFilter<"FavouriteList"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"FavouriteList"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"FavouriteList"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -10545,6 +11851,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     PlayList?: PlayListCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -10560,6 +11867,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     PlayList?: PlayListUncheckedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -10575,6 +11883,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -10590,6 +11899,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUncheckedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -10644,6 +11954,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUncheckedCreateInput = {
@@ -10665,6 +11976,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUpdateInput = {
@@ -10686,6 +11998,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateInput = {
@@ -10707,6 +12020,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemCreateManyInput = {
@@ -11161,6 +12475,60 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FavouriteListCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    User: UserCreateNestedOneWithoutFavouriteListInput
+    Problem: ProblemCreateNestedOneWithoutFavouriteListInput
+  }
+
+  export type FavouriteListUncheckedCreateInput = {
+    id?: string
+    userId: string
+    problemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavouriteListUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutFavouriteListNestedInput
+    Problem?: ProblemUpdateOneRequiredWithoutFavouriteListNestedInput
+  }
+
+  export type FavouriteListUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    problemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavouriteListCreateManyInput = {
+    id?: string
+    userId: string
+    problemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavouriteListUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavouriteListUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    problemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -11233,6 +12601,12 @@ export namespace Prisma {
     none?: PlayListWhereInput
   }
 
+  export type FavouriteListListRelationFilter = {
+    every?: FavouriteListWhereInput
+    some?: FavouriteListWhereInput
+    none?: FavouriteListWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -11251,6 +12625,10 @@ export namespace Prisma {
   }
 
   export type PlayListOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FavouriteListOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11737,6 +13115,30 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type FavouriteListCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    problemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FavouriteListMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    problemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type FavouriteListMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    problemId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type ProblemCreateNestedManyWithoutUserInput = {
     create?: XOR<ProblemCreateWithoutUserInput, ProblemUncheckedCreateWithoutUserInput> | ProblemCreateWithoutUserInput[] | ProblemUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProblemCreateOrConnectWithoutUserInput | ProblemCreateOrConnectWithoutUserInput[]
@@ -11765,6 +13167,13 @@ export namespace Prisma {
     connect?: PlayListWhereUniqueInput | PlayListWhereUniqueInput[]
   }
 
+  export type FavouriteListCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput> | FavouriteListCreateWithoutUserInput[] | FavouriteListUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutUserInput | FavouriteListCreateOrConnectWithoutUserInput[]
+    createMany?: FavouriteListCreateManyUserInputEnvelope
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+  }
+
   export type ProblemUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<ProblemCreateWithoutUserInput, ProblemUncheckedCreateWithoutUserInput> | ProblemCreateWithoutUserInput[] | ProblemUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProblemCreateOrConnectWithoutUserInput | ProblemCreateOrConnectWithoutUserInput[]
@@ -11791,6 +13200,13 @@ export namespace Prisma {
     connectOrCreate?: PlayListCreateOrConnectWithoutUserInput | PlayListCreateOrConnectWithoutUserInput[]
     createMany?: PlayListCreateManyUserInputEnvelope
     connect?: PlayListWhereUniqueInput | PlayListWhereUniqueInput[]
+  }
+
+  export type FavouriteListUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput> | FavouriteListCreateWithoutUserInput[] | FavouriteListUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutUserInput | FavouriteListCreateOrConnectWithoutUserInput[]
+    createMany?: FavouriteListCreateManyUserInputEnvelope
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -11865,6 +13281,20 @@ export namespace Prisma {
     deleteMany?: PlayListScalarWhereInput | PlayListScalarWhereInput[]
   }
 
+  export type FavouriteListUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput> | FavouriteListCreateWithoutUserInput[] | FavouriteListUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutUserInput | FavouriteListCreateOrConnectWithoutUserInput[]
+    upsert?: FavouriteListUpsertWithWhereUniqueWithoutUserInput | FavouriteListUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavouriteListCreateManyUserInputEnvelope
+    set?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    disconnect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    delete?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    update?: FavouriteListUpdateWithWhereUniqueWithoutUserInput | FavouriteListUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavouriteListUpdateManyWithWhereWithoutUserInput | FavouriteListUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
+  }
+
   export type ProblemUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<ProblemCreateWithoutUserInput, ProblemUncheckedCreateWithoutUserInput> | ProblemCreateWithoutUserInput[] | ProblemUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ProblemCreateOrConnectWithoutUserInput | ProblemCreateOrConnectWithoutUserInput[]
@@ -11921,6 +13351,20 @@ export namespace Prisma {
     deleteMany?: PlayListScalarWhereInput | PlayListScalarWhereInput[]
   }
 
+  export type FavouriteListUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput> | FavouriteListCreateWithoutUserInput[] | FavouriteListUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutUserInput | FavouriteListCreateOrConnectWithoutUserInput[]
+    upsert?: FavouriteListUpsertWithWhereUniqueWithoutUserInput | FavouriteListUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: FavouriteListCreateManyUserInputEnvelope
+    set?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    disconnect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    delete?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    update?: FavouriteListUpdateWithWhereUniqueWithoutUserInput | FavouriteListUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: FavouriteListUpdateManyWithWhereWithoutUserInput | FavouriteListUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
+  }
+
   export type ProblemCreatetagsInput = {
     set: string[]
   }
@@ -11952,6 +13396,13 @@ export namespace Prisma {
     connect?: ProblemInPlaylistWhereUniqueInput | ProblemInPlaylistWhereUniqueInput[]
   }
 
+  export type FavouriteListCreateNestedManyWithoutProblemInput = {
+    create?: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput> | FavouriteListCreateWithoutProblemInput[] | FavouriteListUncheckedCreateWithoutProblemInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutProblemInput | FavouriteListCreateOrConnectWithoutProblemInput[]
+    createMany?: FavouriteListCreateManyProblemInputEnvelope
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+  }
+
   export type SubmissionUncheckedCreateNestedManyWithoutProblemInput = {
     create?: XOR<SubmissionCreateWithoutProblemInput, SubmissionUncheckedCreateWithoutProblemInput> | SubmissionCreateWithoutProblemInput[] | SubmissionUncheckedCreateWithoutProblemInput[]
     connectOrCreate?: SubmissionCreateOrConnectWithoutProblemInput | SubmissionCreateOrConnectWithoutProblemInput[]
@@ -11971,6 +13422,13 @@ export namespace Prisma {
     connectOrCreate?: ProblemInPlaylistCreateOrConnectWithoutProblemInput | ProblemInPlaylistCreateOrConnectWithoutProblemInput[]
     createMany?: ProblemInPlaylistCreateManyProblemInputEnvelope
     connect?: ProblemInPlaylistWhereUniqueInput | ProblemInPlaylistWhereUniqueInput[]
+  }
+
+  export type FavouriteListUncheckedCreateNestedManyWithoutProblemInput = {
+    create?: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput> | FavouriteListCreateWithoutProblemInput[] | FavouriteListUncheckedCreateWithoutProblemInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutProblemInput | FavouriteListCreateOrConnectWithoutProblemInput[]
+    createMany?: FavouriteListCreateManyProblemInputEnvelope
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
   }
 
   export type EnumDifficultyFieldUpdateOperationsInput = {
@@ -12032,6 +13490,20 @@ export namespace Prisma {
     deleteMany?: ProblemInPlaylistScalarWhereInput | ProblemInPlaylistScalarWhereInput[]
   }
 
+  export type FavouriteListUpdateManyWithoutProblemNestedInput = {
+    create?: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput> | FavouriteListCreateWithoutProblemInput[] | FavouriteListUncheckedCreateWithoutProblemInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutProblemInput | FavouriteListCreateOrConnectWithoutProblemInput[]
+    upsert?: FavouriteListUpsertWithWhereUniqueWithoutProblemInput | FavouriteListUpsertWithWhereUniqueWithoutProblemInput[]
+    createMany?: FavouriteListCreateManyProblemInputEnvelope
+    set?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    disconnect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    delete?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    update?: FavouriteListUpdateWithWhereUniqueWithoutProblemInput | FavouriteListUpdateWithWhereUniqueWithoutProblemInput[]
+    updateMany?: FavouriteListUpdateManyWithWhereWithoutProblemInput | FavouriteListUpdateManyWithWhereWithoutProblemInput[]
+    deleteMany?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
+  }
+
   export type SubmissionUncheckedUpdateManyWithoutProblemNestedInput = {
     create?: XOR<SubmissionCreateWithoutProblemInput, SubmissionUncheckedCreateWithoutProblemInput> | SubmissionCreateWithoutProblemInput[] | SubmissionUncheckedCreateWithoutProblemInput[]
     connectOrCreate?: SubmissionCreateOrConnectWithoutProblemInput | SubmissionCreateOrConnectWithoutProblemInput[]
@@ -12072,6 +13544,20 @@ export namespace Prisma {
     update?: ProblemInPlaylistUpdateWithWhereUniqueWithoutProblemInput | ProblemInPlaylistUpdateWithWhereUniqueWithoutProblemInput[]
     updateMany?: ProblemInPlaylistUpdateManyWithWhereWithoutProblemInput | ProblemInPlaylistUpdateManyWithWhereWithoutProblemInput[]
     deleteMany?: ProblemInPlaylistScalarWhereInput | ProblemInPlaylistScalarWhereInput[]
+  }
+
+  export type FavouriteListUncheckedUpdateManyWithoutProblemNestedInput = {
+    create?: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput> | FavouriteListCreateWithoutProblemInput[] | FavouriteListUncheckedCreateWithoutProblemInput[]
+    connectOrCreate?: FavouriteListCreateOrConnectWithoutProblemInput | FavouriteListCreateOrConnectWithoutProblemInput[]
+    upsert?: FavouriteListUpsertWithWhereUniqueWithoutProblemInput | FavouriteListUpsertWithWhereUniqueWithoutProblemInput[]
+    createMany?: FavouriteListCreateManyProblemInputEnvelope
+    set?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    disconnect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    delete?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    connect?: FavouriteListWhereUniqueInput | FavouriteListWhereUniqueInput[]
+    update?: FavouriteListUpdateWithWhereUniqueWithoutProblemInput | FavouriteListUpdateWithWhereUniqueWithoutProblemInput[]
+    updateMany?: FavouriteListUpdateManyWithWhereWithoutProblemInput | FavouriteListUpdateManyWithWhereWithoutProblemInput[]
+    deleteMany?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutSubmissionInput = {
@@ -12280,6 +13766,34 @@ export namespace Prisma {
     upsert?: ProblemUpsertWithoutProblemInPlaylistInput
     connect?: ProblemWhereUniqueInput
     update?: XOR<XOR<ProblemUpdateToOneWithWhereWithoutProblemInPlaylistInput, ProblemUpdateWithoutProblemInPlaylistInput>, ProblemUncheckedUpdateWithoutProblemInPlaylistInput>
+  }
+
+  export type UserCreateNestedOneWithoutFavouriteListInput = {
+    create?: XOR<UserCreateWithoutFavouriteListInput, UserUncheckedCreateWithoutFavouriteListInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavouriteListInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ProblemCreateNestedOneWithoutFavouriteListInput = {
+    create?: XOR<ProblemCreateWithoutFavouriteListInput, ProblemUncheckedCreateWithoutFavouriteListInput>
+    connectOrCreate?: ProblemCreateOrConnectWithoutFavouriteListInput
+    connect?: ProblemWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutFavouriteListNestedInput = {
+    create?: XOR<UserCreateWithoutFavouriteListInput, UserUncheckedCreateWithoutFavouriteListInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFavouriteListInput
+    upsert?: UserUpsertWithoutFavouriteListInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFavouriteListInput, UserUpdateWithoutFavouriteListInput>, UserUncheckedUpdateWithoutFavouriteListInput>
+  }
+
+  export type ProblemUpdateOneRequiredWithoutFavouriteListNestedInput = {
+    create?: XOR<ProblemCreateWithoutFavouriteListInput, ProblemUncheckedCreateWithoutFavouriteListInput>
+    connectOrCreate?: ProblemCreateOrConnectWithoutFavouriteListInput
+    upsert?: ProblemUpsertWithoutFavouriteListInput
+    connect?: ProblemWhereUniqueInput
+    update?: XOR<XOR<ProblemUpdateToOneWithWhereWithoutFavouriteListInput, ProblemUpdateWithoutFavouriteListInput>, ProblemUncheckedUpdateWithoutFavouriteListInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -12506,6 +14020,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUncheckedCreateWithoutUserInput = {
@@ -12526,6 +14041,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemCreateOrConnectWithoutUserInput = {
@@ -12631,6 +14147,30 @@ export namespace Prisma {
 
   export type PlayListCreateManyUserInputEnvelope = {
     data: PlayListCreateManyUserInput | PlayListCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FavouriteListCreateWithoutUserInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Problem: ProblemCreateNestedOneWithoutFavouriteListInput
+  }
+
+  export type FavouriteListUncheckedCreateWithoutUserInput = {
+    id?: string
+    problemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavouriteListCreateOrConnectWithoutUserInput = {
+    where: FavouriteListWhereUniqueInput
+    create: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput>
+  }
+
+  export type FavouriteListCreateManyUserInputEnvelope = {
+    data: FavouriteListCreateManyUserInput | FavouriteListCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -12762,6 +14302,33 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"PlayList"> | Date | string
   }
 
+  export type FavouriteListUpsertWithWhereUniqueWithoutUserInput = {
+    where: FavouriteListWhereUniqueInput
+    update: XOR<FavouriteListUpdateWithoutUserInput, FavouriteListUncheckedUpdateWithoutUserInput>
+    create: XOR<FavouriteListCreateWithoutUserInput, FavouriteListUncheckedCreateWithoutUserInput>
+  }
+
+  export type FavouriteListUpdateWithWhereUniqueWithoutUserInput = {
+    where: FavouriteListWhereUniqueInput
+    data: XOR<FavouriteListUpdateWithoutUserInput, FavouriteListUncheckedUpdateWithoutUserInput>
+  }
+
+  export type FavouriteListUpdateManyWithWhereWithoutUserInput = {
+    where: FavouriteListScalarWhereInput
+    data: XOR<FavouriteListUpdateManyMutationInput, FavouriteListUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type FavouriteListScalarWhereInput = {
+    AND?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
+    OR?: FavouriteListScalarWhereInput[]
+    NOT?: FavouriteListScalarWhereInput | FavouriteListScalarWhereInput[]
+    id?: StringFilter<"FavouriteList"> | string
+    userId?: StringFilter<"FavouriteList"> | string
+    problemId?: StringFilter<"FavouriteList"> | string
+    createdAt?: DateTimeFilter<"FavouriteList"> | Date | string
+    updatedAt?: DateTimeFilter<"FavouriteList"> | Date | string
+  }
+
   export type UserCreateWithoutProblemInput = {
     id?: string
     name: string
@@ -12774,6 +14341,7 @@ export namespace Prisma {
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     PlayList?: PlayListCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProblemInput = {
@@ -12788,6 +14356,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     PlayList?: PlayListUncheckedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProblemInput = {
@@ -12887,6 +14456,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FavouriteListCreateWithoutProblemInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    User: UserCreateNestedOneWithoutFavouriteListInput
+  }
+
+  export type FavouriteListUncheckedCreateWithoutProblemInput = {
+    id?: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavouriteListCreateOrConnectWithoutProblemInput = {
+    where: FavouriteListWhereUniqueInput
+    create: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput>
+  }
+
+  export type FavouriteListCreateManyProblemInputEnvelope = {
+    data: FavouriteListCreateManyProblemInput | FavouriteListCreateManyProblemInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutProblemInput = {
     update: XOR<UserUpdateWithoutProblemInput, UserUncheckedUpdateWithoutProblemInput>
     create: XOR<UserCreateWithoutProblemInput, UserUncheckedCreateWithoutProblemInput>
@@ -12910,6 +14503,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProblemInput = {
@@ -12924,6 +14518,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUncheckedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SubmissionUpsertWithWhereUniqueWithoutProblemInput = {
@@ -12985,6 +14580,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ProblemInPlaylist"> | Date | string
   }
 
+  export type FavouriteListUpsertWithWhereUniqueWithoutProblemInput = {
+    where: FavouriteListWhereUniqueInput
+    update: XOR<FavouriteListUpdateWithoutProblemInput, FavouriteListUncheckedUpdateWithoutProblemInput>
+    create: XOR<FavouriteListCreateWithoutProblemInput, FavouriteListUncheckedCreateWithoutProblemInput>
+  }
+
+  export type FavouriteListUpdateWithWhereUniqueWithoutProblemInput = {
+    where: FavouriteListWhereUniqueInput
+    data: XOR<FavouriteListUpdateWithoutProblemInput, FavouriteListUncheckedUpdateWithoutProblemInput>
+  }
+
+  export type FavouriteListUpdateManyWithWhereWithoutProblemInput = {
+    where: FavouriteListScalarWhereInput
+    data: XOR<FavouriteListUpdateManyMutationInput, FavouriteListUncheckedUpdateManyWithoutProblemInput>
+  }
+
   export type UserCreateWithoutSubmissionInput = {
     id?: string
     name: string
@@ -12997,6 +14608,7 @@ export namespace Prisma {
     problem?: ProblemCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
     PlayList?: PlayListCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSubmissionInput = {
@@ -13011,6 +14623,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
     PlayList?: PlayListUncheckedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSubmissionInput = {
@@ -13036,6 +14649,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutProblemInput
     solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUncheckedCreateWithoutSubmissionInput = {
@@ -13056,6 +14670,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemCreateOrConnectWithoutSubmissionInput = {
@@ -13124,6 +14739,7 @@ export namespace Prisma {
     problem?: ProblemUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmissionInput = {
@@ -13138,6 +14754,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUncheckedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProblemUpsertWithoutSubmissionInput = {
@@ -13169,6 +14786,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateWithoutSubmissionInput = {
@@ -13189,6 +14807,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutProblemNestedInput
   }
 
   export type TestCaseResultUpsertWithWhereUniqueWithoutSubmissionInput = {
@@ -13321,6 +14940,7 @@ export namespace Prisma {
     problem?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     PlayList?: PlayListCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProblemSolvedInput = {
@@ -13335,6 +14955,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     PlayList?: PlayListUncheckedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProblemSolvedInput = {
@@ -13360,6 +14981,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutProblemInput
     submission?: SubmissionCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUncheckedCreateWithoutSolvedByInput = {
@@ -13380,6 +15002,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     submission?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemCreateOrConnectWithoutSolvedByInput = {
@@ -13410,6 +15033,7 @@ export namespace Prisma {
     problem?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProblemSolvedInput = {
@@ -13424,6 +15048,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     PlayList?: PlayListUncheckedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProblemUpsertWithoutSolvedByInput = {
@@ -13455,6 +15080,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutProblemNestedInput
     submission?: SubmissionUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateWithoutSolvedByInput = {
@@ -13475,6 +15101,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submission?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemInPlaylistCreateWithoutPlayListInput = {
@@ -13513,6 +15140,7 @@ export namespace Prisma {
     problem?: ProblemCreateNestedManyWithoutUserInput
     submission?: SubmissionCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPlayListInput = {
@@ -13527,6 +15155,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedCreateNestedManyWithoutUserInput
     submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
     problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPlayListInput = {
@@ -13573,6 +15202,7 @@ export namespace Prisma {
     problem?: ProblemUpdateManyWithoutUserNestedInput
     submission?: SubmissionUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPlayListInput = {
@@ -13587,6 +15217,7 @@ export namespace Prisma {
     problem?: ProblemUncheckedUpdateManyWithoutUserNestedInput
     submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
     problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PlayListCreateWithoutProblemInput = {
@@ -13630,6 +15261,7 @@ export namespace Prisma {
     user: UserCreateNestedOneWithoutProblemInput
     submission?: SubmissionCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemUncheckedCreateWithoutProblemInPlaylistInput = {
@@ -13650,6 +15282,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     submission?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
     solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
+    favouriteList?: FavouriteListUncheckedCreateNestedManyWithoutProblemInput
   }
 
   export type ProblemCreateOrConnectWithoutProblemInPlaylistInput = {
@@ -13715,6 +15348,7 @@ export namespace Prisma {
     user?: UserUpdateOneRequiredWithoutProblemNestedInput
     submission?: SubmissionUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateWithoutProblemInPlaylistInput = {
@@ -13735,6 +15369,183 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     submission?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutProblemNestedInput
+  }
+
+  export type UserCreateWithoutFavouriteListInput = {
+    id?: string
+    name: string
+    email: string
+    avatar?: string | null
+    role?: $Enums.UserRole
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    problem?: ProblemCreateNestedManyWithoutUserInput
+    submission?: SubmissionCreateNestedManyWithoutUserInput
+    problemSolved?: ProblemSolvedCreateNestedManyWithoutUserInput
+    PlayList?: PlayListCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFavouriteListInput = {
+    id?: string
+    name: string
+    email: string
+    avatar?: string | null
+    role?: $Enums.UserRole
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    problem?: ProblemUncheckedCreateNestedManyWithoutUserInput
+    submission?: SubmissionUncheckedCreateNestedManyWithoutUserInput
+    problemSolved?: ProblemSolvedUncheckedCreateNestedManyWithoutUserInput
+    PlayList?: PlayListUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFavouriteListInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutFavouriteListInput, UserUncheckedCreateWithoutFavouriteListInput>
+  }
+
+  export type ProblemCreateWithoutFavouriteListInput = {
+    id?: string
+    title: string
+    description: string
+    difficulty?: $Enums.Difficulty
+    tags?: ProblemCreatetagsInput | string[]
+    examples: JsonNullValueInput | InputJsonValue
+    constraints: string
+    hints?: string | null
+    editorial?: string | null
+    testcases: JsonNullValueInput | InputJsonValue
+    codeSnippets: JsonNullValueInput | InputJsonValue
+    referenceSolutions: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProblemInput
+    submission?: SubmissionCreateNestedManyWithoutProblemInput
+    solvedBy?: ProblemSolvedCreateNestedManyWithoutProblemInput
+    ProblemInPlaylist?: ProblemInPlaylistCreateNestedManyWithoutProblemInput
+  }
+
+  export type ProblemUncheckedCreateWithoutFavouriteListInput = {
+    id?: string
+    title: string
+    description: string
+    difficulty?: $Enums.Difficulty
+    tags?: ProblemCreatetagsInput | string[]
+    userId: string
+    examples: JsonNullValueInput | InputJsonValue
+    constraints: string
+    hints?: string | null
+    editorial?: string | null
+    testcases: JsonNullValueInput | InputJsonValue
+    codeSnippets: JsonNullValueInput | InputJsonValue
+    referenceSolutions: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    submission?: SubmissionUncheckedCreateNestedManyWithoutProblemInput
+    solvedBy?: ProblemSolvedUncheckedCreateNestedManyWithoutProblemInput
+    ProblemInPlaylist?: ProblemInPlaylistUncheckedCreateNestedManyWithoutProblemInput
+  }
+
+  export type ProblemCreateOrConnectWithoutFavouriteListInput = {
+    where: ProblemWhereUniqueInput
+    create: XOR<ProblemCreateWithoutFavouriteListInput, ProblemUncheckedCreateWithoutFavouriteListInput>
+  }
+
+  export type UserUpsertWithoutFavouriteListInput = {
+    update: XOR<UserUpdateWithoutFavouriteListInput, UserUncheckedUpdateWithoutFavouriteListInput>
+    create: XOR<UserCreateWithoutFavouriteListInput, UserUncheckedCreateWithoutFavouriteListInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutFavouriteListInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFavouriteListInput, UserUncheckedUpdateWithoutFavouriteListInput>
+  }
+
+  export type UserUpdateWithoutFavouriteListInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    problem?: ProblemUpdateManyWithoutUserNestedInput
+    submission?: SubmissionUpdateManyWithoutUserNestedInput
+    problemSolved?: ProblemSolvedUpdateManyWithoutUserNestedInput
+    PlayList?: PlayListUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutFavouriteListInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    problem?: ProblemUncheckedUpdateManyWithoutUserNestedInput
+    submission?: SubmissionUncheckedUpdateManyWithoutUserNestedInput
+    problemSolved?: ProblemSolvedUncheckedUpdateManyWithoutUserNestedInput
+    PlayList?: PlayListUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ProblemUpsertWithoutFavouriteListInput = {
+    update: XOR<ProblemUpdateWithoutFavouriteListInput, ProblemUncheckedUpdateWithoutFavouriteListInput>
+    create: XOR<ProblemCreateWithoutFavouriteListInput, ProblemUncheckedCreateWithoutFavouriteListInput>
+    where?: ProblemWhereInput
+  }
+
+  export type ProblemUpdateToOneWithWhereWithoutFavouriteListInput = {
+    where?: ProblemWhereInput
+    data: XOR<ProblemUpdateWithoutFavouriteListInput, ProblemUncheckedUpdateWithoutFavouriteListInput>
+  }
+
+  export type ProblemUpdateWithoutFavouriteListInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+    tags?: ProblemUpdatetagsInput | string[]
+    examples?: JsonNullValueInput | InputJsonValue
+    constraints?: StringFieldUpdateOperationsInput | string
+    hints?: NullableStringFieldUpdateOperationsInput | string | null
+    editorial?: NullableStringFieldUpdateOperationsInput | string | null
+    testcases?: JsonNullValueInput | InputJsonValue
+    codeSnippets?: JsonNullValueInput | InputJsonValue
+    referenceSolutions?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProblemNestedInput
+    submission?: SubmissionUpdateManyWithoutProblemNestedInput
+    solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
+    ProblemInPlaylist?: ProblemInPlaylistUpdateManyWithoutProblemNestedInput
+  }
+
+  export type ProblemUncheckedUpdateWithoutFavouriteListInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    difficulty?: EnumDifficultyFieldUpdateOperationsInput | $Enums.Difficulty
+    tags?: ProblemUpdatetagsInput | string[]
+    userId?: StringFieldUpdateOperationsInput | string
+    examples?: JsonNullValueInput | InputJsonValue
+    constraints?: StringFieldUpdateOperationsInput | string
+    hints?: NullableStringFieldUpdateOperationsInput | string | null
+    editorial?: NullableStringFieldUpdateOperationsInput | string | null
+    testcases?: JsonNullValueInput | InputJsonValue
+    codeSnippets?: JsonNullValueInput | InputJsonValue
+    referenceSolutions?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    submission?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
+    solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
+    ProblemInPlaylist?: ProblemInPlaylistUncheckedUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemCreateManyUserInput = {
@@ -13785,6 +15596,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type FavouriteListCreateManyUserInput = {
+    id?: string
+    problemId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ProblemUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -13803,6 +15621,7 @@ export namespace Prisma {
     submission?: SubmissionUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateWithoutUserInput = {
@@ -13823,6 +15642,7 @@ export namespace Prisma {
     submission?: SubmissionUncheckedUpdateManyWithoutProblemNestedInput
     solvedBy?: ProblemSolvedUncheckedUpdateManyWithoutProblemNestedInput
     ProblemInPlaylist?: ProblemInPlaylistUncheckedUpdateManyWithoutProblemNestedInput
+    favouriteList?: FavouriteListUncheckedUpdateManyWithoutProblemNestedInput
   }
 
   export type ProblemUncheckedUpdateManyWithoutUserInput = {
@@ -13939,6 +15759,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type FavouriteListUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Problem?: ProblemUpdateOneRequiredWithoutFavouriteListNestedInput
+  }
+
+  export type FavouriteListUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    problemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavouriteListUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    problemId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SubmissionCreateManyProblemInput = {
     id?: string
     userId: string
@@ -13965,6 +15806,13 @@ export namespace Prisma {
   export type ProblemInPlaylistCreateManyProblemInput = {
     id?: string
     playListId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type FavouriteListCreateManyProblemInput = {
+    id?: string
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -14057,6 +15905,27 @@ export namespace Prisma {
   export type ProblemInPlaylistUncheckedUpdateManyWithoutProblemInput = {
     id?: StringFieldUpdateOperationsInput | string
     playListId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavouriteListUpdateWithoutProblemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    User?: UserUpdateOneRequiredWithoutFavouriteListNestedInput
+  }
+
+  export type FavouriteListUncheckedUpdateWithoutProblemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FavouriteListUncheckedUpdateManyWithoutProblemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

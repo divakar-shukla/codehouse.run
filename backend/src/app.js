@@ -8,6 +8,7 @@ import problemRoutes from "./routes/problem.route.js";
 import codeExecutonRoute from "./routes/codeExecution.route.js";
 import submissionRoutes from "./routes/submission.route.js";
 import playListRoute from "./routes/playList.route.js";
+import fevProblemRoute from "./routes/favourite.route.js";
 
 const app = express();
 app.use(cors({
@@ -23,5 +24,6 @@ app.use("/api/v1/problem", problemRoutes);
 app.use("/api/v1/execute-code", codeExecutonRoute);
 app.use("/api/v1/submission", submissionRoutes);
 app.use("/api/v1/playlist", playListRoute);
+app.use("/api/v1/favourite", fevProblemRoute);
 app.use(errorHandler);
 export default app;

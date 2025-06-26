@@ -16,7 +16,20 @@ const getDeletePlaylistValidator = () => {
   ];
 };
 
-const addRemoveProblemToPlaylistValidator = () => {
+const addProblemToPlaylistValidator = () => {
+  return [
+    body("problemId")
+      .trim()
+      .notEmpty()
+      .withMessage("problem id is required"),
+    param("playlistId")
+      .trim()
+      .notEmpty()
+      .withMessage("Playlist id is required"),
+  ];
+};
+
+const removeProblemToPlaylistValidator = () => {
   return [
     body("problemIds")
       .notEmpty()
@@ -29,9 +42,9 @@ const addRemoveProblemToPlaylistValidator = () => {
       .withMessage("Playlist id is required"),
   ];
 };
-
 export {
   createPlaylistValidator,
   getDeletePlaylistValidator,
-  addRemoveProblemToPlaylistValidator,
+  addProblemToPlaylistValidator,
+  removeProblemToPlaylistValidator
 };

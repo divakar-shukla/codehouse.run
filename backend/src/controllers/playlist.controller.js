@@ -64,21 +64,32 @@ const getPlaylistDetails = asyncHandler(async (req, res) => {
 const addProblemToPlaylist = asyncHandler(async (req, res) => {
 
   const { playlistId } = req.params;
-  const { problemIds } = req.body;
-try {
-    const problemsInPlaylist = await db.problemInPlaylist.createMany({
-        data: problemIds.map((problemId) => ({
-          playListId: playlistId,
-          problemId,
-        })),
-      });
+  const { problemId } = req.body;
+  const isExistsPlaylist = await db.playList.findUnique({
+    where:{id:playlistId}
+  })
+  
+  if(!isExistsPlaylist){
+    throw new ApiError(401, "Playlist not found")
+  }
+  const isExistsProblemInPlaylist = await db.problemInPlaylist.findUnique({
+    where:{
+      problemId_playListId:{
+        problemId:problemId,
+        playListId:playlistId
+      }
+    }
+  })
 
-      return res.status(201).json(new ApiResponse(201, problemsInPlaylist, "Problems added in playlist"))
-} catch (error) {
-  throw new ApiError(500, "Error while adding problem in playlist", error)
-}
-   
-    
+  if(isExistsProblemInPlaylist) throw new ApiError(409, "This problem already exist in this playlist")
+
+  const problemsInPlaylist = await db.problemInPlaylist.create({
+      data:{
+        playListId:playlistId,
+        problemId
+      }
+    })
+    return res.status(201).json(new ApiResponse(201, problemsInPlaylist, "Problems added in playlist"))
 });
 const deletePlayList = asyncHandler(async (req, res) => {
 
