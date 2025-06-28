@@ -1,7 +1,7 @@
 import {create} from "zustand"
-import {axiosInstance} from "../lib/axios"
+// import {axiosInstance} from "../lib/axios"
+import authService from "../lib/authService";
 import toast from "react-hot-toast";
-
 
 export const useAuthStore = create((set)=>({
     authUser:null,
@@ -12,7 +12,7 @@ export const useAuthStore = create((set)=>({
     getProfile:async()=>{
         try {
             set({isGetingProfile:true})
-            const res = await axiosInstance.get("/user/profile")
+            const res = await authService.profile()
             console.log(res.data)
             set({authUser:res.data.data})
             toast.success(res.data.message)
@@ -27,7 +27,7 @@ export const useAuthStore = create((set)=>({
     login:async(data)=>{
         try {
             set({isLoging:true})
-            const res = await axiosInstance.post("/user/login", data)
+            const res = await authService.login()
             console.log(res.data)
             set({authUser:res.data.data})
             toast.success(res.data.message)
@@ -39,12 +39,12 @@ export const useAuthStore = create((set)=>({
             set({isLoging:false})
         }
     },
-    signup:async(data)=>{
+    register:async(data)=>{
         try {
             set({isSigningup:true})
-            const res = await axiosInstance.post("/user/register", data)
+            const res = await authService.register()
             console.log(res.data)
-            set({authUser:res.data.data})
+            set({authUser:res.data.data})   
             toast.success(res.data.message)
         } catch (error) {
             console.error("Error while signing up", error)
@@ -56,7 +56,7 @@ export const useAuthStore = create((set)=>({
     },
     LogOut:async()=>{
         try {
-            const res = await axiosInstance.get("/user/profile")
+            const res = await authService.logOut()
             console.log(res.data)
             set({authUser:null})
             toast.success(res.data.message)
