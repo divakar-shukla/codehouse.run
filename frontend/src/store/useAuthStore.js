@@ -13,9 +13,9 @@ export const useAuthStore = create((set)=>({
         try {
             set({isGetingProfile:true})
             const res = await authService.profile()
-            console.log(res.data)
-            set({authUser:res.data.data})
-            toast.success(res.data.message)
+            console.log(res)
+            set({authUser:res.data})
+            toast.success(res.message)
         } catch (error) {
             console.log("Something went wrong in fetch profile", error)
             toast.error(error.response ? error.response.data.message : error.message)
@@ -28,9 +28,9 @@ export const useAuthStore = create((set)=>({
         try {
             set({isLoging:true})
             const res = await authService.login(data)
-            console.log(res.data)
-            set({authUser:res.data.data})
-            toast.success(res.data.message)
+            console.log(res)
+            set({authUser:res.data})
+            toast.success(res.message)
         } catch (error) {
             console.log("Error while login", error)
             toast.error(error.response ? error.response.data.message : error.message)
@@ -42,10 +42,10 @@ export const useAuthStore = create((set)=>({
     register:async(data)=>{
         try {
             set({isSigningup:true})
-            const res = await authService.register()
-            console.log(res.data)
-            set({authUser:res.data.data})   
-            toast.success(res.data.message)
+            const res = await authService.register(data)
+            console.log(res)
+            set({authUser:res.data})   
+            toast.success(res.message)
         } catch (error) {
             console.error("Error while signing up", error)
             toast.error(error.response ? error.response.data.message : error.message)
@@ -57,9 +57,9 @@ export const useAuthStore = create((set)=>({
     LogOut:async()=>{
         try {
             const res = await authService.logOut()
-            console.log(res.data)
+            console.log(res)
             set({authUser:null})
-            toast.success(res.data.message)
+            toast.success(res.message)
         } catch (error) {
             console.log("Error in logout proccessing", error)
             toast.error(error.response ? error.response.data.message : error.message)

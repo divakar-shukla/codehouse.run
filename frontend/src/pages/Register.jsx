@@ -1,173 +1,74 @@
-import React, {useState} from 'react'
-import {useForm} from "react-hook-form"
-import { zodResolver } from '@hookform/resolvers/zod';
-import { data, Link } from 'react-router-dom';
-import {
-  Code,
-  Eye,
-  EyeOff,
-  Loader2,
-  Lock,
-  Mail,
-} from "lucide-react";
-import {z} from "zod"
-import AuthImagePattern from '../components/AuthImagePattern';
-import {useAuthStore} from "../store/useAuthStore"
-
-
-const registerSchema = z.object({
-    email:z.string().email("Enter a valid email"),
-    password:z.string().min(6, "Password must be atleast 6 charactor long"),
-    name:z.string().min(3, "Name must be atleast 3 charactor long")
-})
+import { Link } from 'react-router-dom'
+import { useAuthStore } from '../store/useAuthStore'
 
 const Register = () => {
-    const [showPassword, setShowPassword] = useState(false)
-    const {register, handleSubmit, formState:{errors}} = useForm({resolver:zodResolver(registerSchema)})
-    const {signup, isSigningup} = useAuthStore()
-    const onSubmit = async (data)=>{
-        console.log(data)
-        try {
-          await signup(data)
-          // console.log("Register data", data)
-        } catch (error) {
-          console.error("Register data", error)
-        }
-    }
   return (
- <div className='h-screen grid lg:grid-cols-2'>
-        <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* Logo */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-2 group">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                <Code className="w-6 h-6 text-primary" />
-              </div>
-              <h1 className="text-2xl font-bold mt-2">Welcome </h1>
-              <p className="text-base-content/60">Register to your account</p>
+    <div className="w-full bg-white dark:bg-gray-900 flex items-center justify-center min-h-screen px-6 mx-auto">
+        <form className="w-full max-w-md">
+            <div className="flex justify-center mx-auto">
+                <img className="w-auto h-7 sm:h-8" src="https://merakiui.com/images/logo.svg" alt="" />
             </div>
-          </div>
-
-          {/* Form */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             
-            {/* name */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Name</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Code className="h-5 w-5 text-base-content/40" />
-                </div>
-                <input
-                  type="text"
-                  {...register("name")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.name ? "input-error" : ""
-                  }`}
-                  placeholder="John Doe"
-                />
-              </div>
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-              )}              
+            <div className="flex items-center justify-center mt-6">
+                <Link to="/login" className="w-1/3 pb-4 font-medium text-center text-gray-500 capitalize border-b dark:border-gray-400 dark:text-gray-300">
+                    Login
+                </Link>
+
+                <Link href="/register" className="w-1/3 pb-4 font-medium text-center text-gray-800 capitalize border-b-2 border-blue-500 dark:border-blue-400 dark:text-white">
+                    Register
+                </Link>
             </div>
 
-            {/* Email */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-base-content/40" />
-                </div>
-                <input
-                  type="email"
-                  {...register("email")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.email ? "input-error" : ""
-                  }`}
-                  placeholder="you@example.com"
-                />
-              </div>
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-              )}
+            <div className="relative flex items-center mt-6">
+                <span className="absolute">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                </span>
+
+            <input type="email" className="block w-full py-3 text-gray-700 bg-white border rounded-lg px-11 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Email address" />
             </div>
 
-            {/* Password */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-base-content/40" />
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                  className={`input input-bordered w-full pl-10 ${
-                    errors.password ? "input-error" : ""
-                  }`}
-                  placeholder="••••••••"
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-base-content/40" />
-                  ) : (
-                    <Eye className="h-5 w-5 text-base-content/40" />
-                  )}
+            <div className="relative flex items-center mt-4">
+                <span className="absolute">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </span>
+
+                <input type="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" />
+            </div>
+
+            <div className="relative flex items-center mt-4">
+                <span className="absolute">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 mx-3 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                </span>
+
+                <input type="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Confirm Password" />
+            </div>
+            <label htmlFor="dropzone-file" className="flex items-center px-3 py-3 mx-auto mt-6 text-center bg-white border-2 border-dashed rounded-lg cursor-pointer dark:border-gray-600 dark:bg-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-gray-300 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                </svg>
+
+                <h2 className="mx-3 text-gray-400">Profile Photo</h2>
+
+                <input id="dropzone-file" type="file" className="hidden" />
+            </label>
+            <div className="mt-6">
+                <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    Sign Up
                 </button>
-              </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-              )}
+
+                <div className="mt-6 text-center ">
+                    <Link to="/login" className="text-sm text-blue-500 hover:underline dark:text-blue-400">
+                        Already have an account?
+                    </Link>
+                </div>
             </div>
-
-            {/* Submit Button */}
-            <button
-              type="submit"
-              className="btn btn-primary w-full"
-             disabled={isSigningup}
-            >
-               {isSigningup ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Loading...
-                </>
-              ) : (
-                "Register"
-              )}
-            </button>
-          </form>
-
-          {/* Footer */}
-          <div className="text-center">
-            <p className="text-base-content/60">
-              Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
-                Login
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-
-       {/* Right Side - Image/Pattern */}
-      <AuthImagePattern
-        title={"Welcome to our platform!"}
-        subtitle={
-          "Register to access our platform and start using our services."
-        }
-      />
+        </form>
     </div>
   )
 }
