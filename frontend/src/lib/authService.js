@@ -9,14 +9,14 @@ const authService = {
     },
     login:async (userData) =>{
         const response =  await axiosIntance.post("/user/login", userData)
-        if(response.data.data?.accessToken){
-             localStorage.setItem(tokenKey.ACCESS_TOKEN, response.data.data.accessToken)
+        if(response.data?.accessToken){
+             localStorage.setItem(tokenKey.ACCESS_TOKEN, response.data.accessToken)
         }
-        if(response.data.data?.refreshToken){
-             localStorage.setItem(tokenKey.REFRESH_TOKEN, response.data.data.refreshToken)
+        if(response.data?.refreshToken){
+             localStorage.setItem(tokenKey.REFRESH_TOKEN, response.data.refreshToken)
         }
         
-        return response.data
+        return response
     },
     logOut:async () =>{
         const response =  await axiosIntance.get("/user/login")

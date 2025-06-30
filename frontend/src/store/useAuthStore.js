@@ -27,7 +27,7 @@ export const useAuthStore = create((set)=>({
     login:async(data)=>{
         try {
             set({isLoging:true})
-            const res = await authService.login()
+            const res = await authService.login(data)
             console.log(res.data)
             set({authUser:res.data.data})
             toast.success(res.data.message)
