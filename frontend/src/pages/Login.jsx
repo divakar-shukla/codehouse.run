@@ -1,26 +1,21 @@
-import React, {useState} from 'react'
 import {useForm} from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router-dom';
-import {z} from "zod"
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore.js';
+import { loginSchema } from '../zodSchema/auth.schema.js';
 
-const loginSchema = z.object({
-    email:z.string().email("Enter a valid email"),
-    password:z.string().min(6, "Password must be atleast 6 charactor long"),
-})
 
 const Login = () => {
-  const {isLoging, authUser, login} = useAuthStore()
+  const {isLoging, login} = useAuthStore()
+  const navigation = useNavigate()
   const {register, handleSubmit, formState:{errors}} = useForm({resolver:zodResolver(loginSchema)})
-  const submitLoginForm = async (data) =>{
-    console.log(data)
 
+  const submitLoginForm = async (data) =>{
     try {
-      await login(data)
-      if(authUser){
-        window.location.href = "/register"
-      }
+      const LoggedInUser = await login(data)
+      if(LoggedInUser){
+        navigation("/register")
+      } 
     } catch (error) {
       console.log(error)
     }
@@ -68,8 +63,8 @@ const Login = () => {
             <div className=''>{errors.password && (<p className='text-red-500 text-sm mt-1'>{errors.password.message}</p>)}</div>
 
             <div className="mt-6">
-                <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50" type='submit'>
-                    Log in
+                <button className={`w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform ${isLoging ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-400"}  rounded-lg  focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50`} type='submit' disabled={isLoging}>
+                    {isLoging ? ("Logging in") : ("Login")}
                 </button>
 
                 <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or Login with</p>

@@ -1,68 +1,75 @@
-import {create} from "zustand"
-// import {axiosInstance} from "../lib/axios"
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import authService from "../lib/authService";
 import toast from "react-hot-toast";
 
-export const useAuthStore = create((set)=>({
-    authUser:null,
-    isSigningup:false,
-    isLoging:false,
-    isGetingProfile:false,
+export const useAuthStore = create(
+    (set) => ({
+      authUser: null,
+      isRegistering: false,
+      isLoging: false,
+      isGetingProfile: false,
 
-    getProfile:async()=>{
+      getProfile: async () => {
         try {
-            set({isGetingProfile:true})
-            const res = await authService.profile()
-            console.log(res)
-            set({authUser:res.data})
-            toast.success(res.message)
+          set({ isGetingProfile: true });
+          const res = await authService.profile();
+          console.log(res);
+          set({ authUser: res.data });
+          toast.success(res.message);
         } catch (error) {
-            console.log("Something went wrong in fetch profile", error)
-            toast.error(error.response ? error.response.data.message : error.message)
-            set({authUser:null})
-        }finally{
-            set({isGetingProfile:false})
+          console.log("Something went wrong in fetch profile", error);
+          toast.error(error.response ? error.response.data.message : error.message);
+          set({ authUser: null });
+        } finally {
+          set({ isGetingProfile: false });
         }
-    },
-    login:async(data)=>{
+      },
+
+      login: async (data) => {
         try {
-            set({isLoging:true})
-            const res = await authService.login(data)
-            console.log(res)
-            set({authUser:res.data})
-            toast.success(res.message)
+          set({ isLoging: true });
+          const res = await authService.login(data);
+          console.log(res);
+          set({ authUser: res.data });
+          toast.success(res.message);
+          return res.data;
         } catch (error) {
-            console.log("Error while login", error)
-            toast.error(error.response ? error.response.data.message : error.message)
-            set({authUser:null})
-        }finally{
-            set({isLoging:false})
+          console.log("Error while login", error);
+          toast.error(error.response ? error.response.data.message : error.message);
+          set({ authUser: null });
+          return null;
+        } finally {
+          set({ isLoging: false });
         }
-    },
-    register:async(data)=>{
+      },
+
+      Register: async (data) => {
         try {
-            set({isSigningup:true})
-            const res = await authService.register(data)
-            console.log(res)
-            set({authUser:res.data})   
-            toast.success(res.message)
+          set({ isRegistering: true });
+          const res = await authService.register(data);
+          console.log(res);
+          set({ authUser: res.data });
+          toast.success(res.message);
         } catch (error) {
-            console.error("Error while signing up", error)
-            toast.error(error.response ? error.response.data.message : error.message)
-            set({authUser:null})
-        }finally{
-            set({isSigningup:false})
+          console.error("Error while signing up", error);
+          toast.error(error.response ? error.response.data.message : error.message);
+          set({ authUser: null });
+        } finally {
+          set({ isRegistering: false });
         }
-    },
-    LogOut:async()=>{
+      },
+
+      LogOut: async () => {
         try {
-            const res = await authService.logOut()
-            console.log(res)
-            set({authUser:null})
-            toast.success(res.message)
+          const res = await authService.logOut();
+          console.log(res);
+          set({ authUser: null });
+          toast.success(res.message);
         } catch (error) {
-            console.log("Error in logout proccessing", error)
-            toast.error(error.response ? error.response.data.message : error.message)
+          console.log("Error in logout processing", error);
+          toast.error(error.response ? error.response.data.message : error.message);
         }
-    }
-}))
+      },
+    })
+);
