@@ -1,5 +1,5 @@
 import { data, Link } from 'react-router-dom'
-import { useAuthStore } from '../store/useAuthStore'
+import { useAuthStore } from '../store/useAuthStore.js'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { registerSchema } from '../zodSchema/auth.schema.js'

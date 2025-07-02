@@ -12,10 +12,7 @@ const Login = () => {
 
   const submitLoginForm = async (data) =>{
     try {
-      const LoggedInUser = await login(data)
-      if(LoggedInUser){
-        navigation("/register")
-      } 
+      await login(data)
     } catch (error) {
       console.log(error)
     }

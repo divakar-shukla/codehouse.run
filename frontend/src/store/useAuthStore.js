@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import authService from "../lib/authService";
 import toast from "react-hot-toast";
 
