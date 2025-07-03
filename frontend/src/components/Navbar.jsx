@@ -1,17 +1,43 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-
-
-
+import AccountDropdown from "./AccountDropdown";
 export function Navbar() {
+  const [scrolled, setScrolled] =  useState(false)
+    useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        console.log(scrolled)
+        console.log(window.scrollY)
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
    <nav className="fixed w-full z-50 transition-all duration-300 backdrop-blur-sm top-0 left-0 mt-2">
     <div className="w-full d-flex justify-center">
-      <div className="transition-all duration-500 ease-in-out transform-gpu w-full max-w-5xl backdrop-blur-md shadow-lg mx-auto rounded-3xl">
-        <div className="mx-auto px-6 lg:px-8">
+      <div className={`transition-all duration-700 transform-gpu mx-auto ${scrolled ? "scale-x-100  backdrop-blur-sm shadow-lg":"scale-x-100 rounded-2xl  backdrop-blur-md shadow-xl"}`} style={{
+        transformOrigin:"center",
+        ...(scrolled ? {
+          borderRadius:"0px",
+          maxWidth:"100%",
+          width:"100%"
+          
+        }:{
+          borderRadius:"16px",
+          maxWidth:"1024px",
+          width:"100%"
+        })
+      }}>
+        <div className="px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div>
-               <Link to={"/"}  className="flex items-center text-indigo-500 hover:text-indigo-400 transition-colors">    
+               <Link to={"/"}  className="flex items-center text-indigo-500 hover:text-indigo-400 transition-colors ">    
                   <svg
                     width="50"
                     height="50"
@@ -32,14 +58,14 @@ export function Navbar() {
                 </Link>
               </div>
               <div>
-                <ul className="flex gap-7 ">
-                  <li className="px-7">Problem</li>
-                  <li className="px-7">Learn</li>
-                  <li className="px-7">About</li>
+                <ul className="flex gap-7 text-lg font-semibold">
+                  <li className="px-7 cursor-pointer">Problem</li>
+                  <li className="px-7 cursor-pointer">Learn</li>
+                  <li className="px-7 cursor-pointer">About</li>
                 </ul>
               </div>
               <div>
-                Dashboard
+                <AccountDropdown/>
               </div>
           </div>
         </div>

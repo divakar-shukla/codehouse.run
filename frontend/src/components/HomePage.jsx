@@ -1,8 +1,11 @@
 import React from 'react'
+import HeroSection from './HeroSection'
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div className='h-[2000px] mt-[60px]'>
+      <HeroSection/>
+    </div>
   )
 }
 
