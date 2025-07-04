@@ -1,0 +1,49 @@
+import React from 'react'
+import HeroSection from '../components/HeroSection'
+import AnimatedGradientHeading from '../components/heading/AnimatedGradientHeading'
+import Slider from '../components/Slider'
+import { List, Languages, Braces, ChartNoAxesCombined, Route, Scaling   } from 'lucide-react'
+import {motion} from "framer-motion"
+import AnimatedBorderCard from '../components/AnimatedBorderCard '
+import { Routes } from 'react-router-dom'
+
+const Home = () => {
+  return (
+    <div className='h-[2000px] mt-[60px]'>
+      <HeroSection/>
+      <div className='max-w-[1500px] m-auto'>
+        <AnimatedGradientHeading text={"Learners Hired By Top Companies"} className={"md:text-4xl text-3xl -mt-8"}/>
+        <Slider/>
+
+         <AnimatedGradientHeading text={"Feature"} className={"md:text-4xl text-3xl mt-20"}/>
+
+         <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mt-15 '>
+          <div className='col-span-1 md:col-span-2'>
+            <AnimatedBorderCard icon={<List className='size-10 text-[var(--primary)] mb-8'/>} heading={"Playlists for Guided Learning"} description={"Explore structured playlists that guide you through essential topics like Arrays, Strings, Trees, Dynamic Programming, and System Design. Whether you're a beginner building a strong foundation or a job-seeker preparing for FAANG interviews, each playlist is thoughtfully organized to help you grow consistently and avoid overwhelm. Unlock badges as you complete each track and measure your readiness with topic-specific challenges."}/>
+          </div>
+          <div className='col-span-1 h-full'>
+            <AnimatedBorderCard icon={<Languages  className='size-10 text-[var(--primary)] mb-8'/>} heading={"Multi-Language Support"} description={"Write and run code in Python, JavaScript, and Java right in your browser. More languages coming soon!"}/>
+          </div>
+          <div className='col-span-1 h-full'>
+            <AnimatedBorderCard icon={<Braces className='size-10 text-[var(--primary)] mb-8'/>} heading={"Practice with Real Interview Questions"} description={"Write and run code in Python, JavaScript, and Java right in your browser. More languages coming soon!"}/>
+          </div>
+          <div className='col-span-2 h-full'>
+            <AnimatedBorderCard icon={<ChartNoAxesCombined  className='size-10 text-[var(--primary)] mb-8'/>} heading={"Progress Tracking"} description={"Your journey matters and we make sure you never lose sight of it. With our smart progress tracking system, you can monitor the number of problems solved, accuracy rate, time spent, and your improvement over time. See visual charts of your completed playlists. Whether you're preparing for a coding interview or building consistent daily habits, our dashboard helps you stay focused, set achievable goals, and celebrate every milestone."}/>
+          </div>
+          <div className='col-span-2 row-span-2 h-full'>
+            <AnimatedBorderCard icon={<Scaling  className='size-10 text-[var(--primary)] mb-8'/>} heading={"Resizable Coding Interface"} description={"Enjoy a seamless coding experience with our resizable editor and console. Customize your layout, choose your theme (dark/light), and focus only on what matters—writing clean, working code. Perfect for both small screens and full desktops."} other={<img src='https://www.leetlabs.in/assets/workspace-u_LUFkCN.jpg' className='w-full mt-8'/>}/>
+          </div>
+          <div className='h-full'>
+            <AnimatedBorderCard icon={<Route  className='size-10 text-[var(--primary)] mb-8'/>} heading={"Structured Learning Paths"} description={"Start with programming basics, grow through intermediate problem-solving, and tackle expert-level questions. No matter where you begin, codeHouse.run adapts to your journey and helps you keep moving forward with confidence."} />
+          </div>
+          <div className='h-full'>
+            <AnimatedBorderCard icon={<Route  className='size-10 text-[var(--primary)] mb-8'/>} heading={"Structured Learning Paths"} description={"Start with programming basics, grow through intermediate problem-solving, and tackle expert-level questions. No matter where you begin, codeHouse.run adapts to your journey and helps you keep moving forward with confidence."} />
+          </div>
+         </div>
+      </div>
+      
+    </div>
+  )
+}
+
+export default Home

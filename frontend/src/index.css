@@ -47,9 +47,9 @@
   --foreground: #eab308 ;
   --card: #ffffff; 
   --card-foreground: #030712;
-  --popover: #ffffff;
+  --popover: #d6d6d6;
   --popover-foreground: #030712;
-  --primary: #101828;
+  --primary: #181818;
   --primary-foreground: oklch(0.985 0.002 247.839);
   --secondary: rgb(243, 244, 246);
   --secondary-foreground: oklch(0.21 0.034 264.665);
@@ -78,19 +78,19 @@
 }
 
 .dark {
-  --background:rgb(31 21 24);
+  --background:#121212;
   --foreground: #eab308;
-  --card: #101828;
+  --card: #181818;
   --card-foreground: oklch(0.985 0.002 247.839);
-  --popover: oklch(0.21 0.034 264.665);
+  --popover: #161616;
   --popover-foreground: oklch(0.985 0.002 247.839);
-  --primary: oklch(0.928 0.006 264.531);
+  --primary: #e5e7eb;
   --primary-foreground: oklch(0.21 0.034 264.665);
-  --secondary: oklch(0.278 0.033 256.848);
+  --secondary: #181818;
   --secondary-foreground: oklch(0.985 0.002 247.839);
-  --muted: oklch(0.278 0.033 256.848);
+  --muted: #1e2939;
   --muted-foreground: oklch(0.707 0.022 261.325);
-  --accent: oklch(0.278 0.033 256.848);
+  --accent: #1e2939;
   --accent-foreground: oklch(0.985 0.002 247.839);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -127,3 +127,35 @@
   }
 }
 
+
+@keyframes borderAnimate {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes animatePosition {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: 5px;
+  }
+}
+
+.animateCard-position-on-hover {
+  position: relative; /* Needed for top to work */
+}
+
+.animateCard-position-on-hover:hover {
+  animation: animatePosition 1s ease-in ;
+}
+
+.animate-border-on-hover {
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  animation: borderAnimate 3s linear infinite;
+}

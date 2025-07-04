@@ -3,7 +3,7 @@ import {Toaster} from "react-hot-toast"
 import Register from "./pages/Register";
 import {Route, Routes, Navigate} from "react-router-dom"
 import Login from "./pages/Login";
-import HomePage from "./components/HomePage";
+import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 
 
@@ -21,7 +21,7 @@ let authUser = null
         <Route path="/" element={<Layout/>}>
            <Route 
            index
-           element={<HomePage/> }
+           element={<Home/> }
            />
         </Route>
         <Route
