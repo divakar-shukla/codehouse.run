@@ -10,9 +10,9 @@ const AnimatedGradientHeading = ({text, className=""}) => {
         backgroundSize: "100% 100%",
       }}
     >
-      <h2 className={`text-center font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#eab308] to-[#e5e7eb] ${className} inline-block `}>
+      <h2 className={`text-center font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#eab308] to-[#e5e7eb] ${className}  min-w-[50%]`}>
         {text}
-        <div className='h-[2px] m-auto bg-[var(--foreground)] w-90 mt-4'></div>
+        <div className='h-[2px] m-auto bg-gradient-to-r from-[var(--background)] from-5% via-[var(--foreground)]  mt-4'></div>
         </h2>
       
     </div>

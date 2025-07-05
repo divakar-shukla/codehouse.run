@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   return (
-    <div className="w-screen overflow-hidden bg-[var(--background)]">
+    <div className="w-screen overflow-hidden ">
       <div className="mx-auto md:mt-25 mt-15 w-screen max-w-3xl">
         <div className="text-center text-3xl  text-[var(--primary)]">
             <div className='flex justify-center items-center'>
