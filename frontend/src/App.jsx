@@ -5,6 +5,7 @@ import {Route, Routes, Navigate} from "react-router-dom"
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
+import Problem from "./pages/problem";
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   localStorage.theme === "dark" ||
     (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
 );
-let authUser = null
+let authUser = true
   return (
     <div className="flex flex-col items-center justify-center">
       <Toaster/>
@@ -22,6 +23,10 @@ let authUser = null
            <Route 
            index
            element={<Home/> }
+           />
+           <Route 
+           path="problem"
+           element={<Problem/>}
            />
         </Route>
         <Route

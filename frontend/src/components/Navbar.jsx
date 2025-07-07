@@ -48,7 +48,7 @@ export function Navbar() {
                   <li className="px-7 cursor-pointer">About</li>
                 </ul>
               </div>
-              <div>
+              <div className="flex items-center py-2">
                 <AccountDropdown className="border border-[var(--foreground)]"/>
               </div>
           </div>

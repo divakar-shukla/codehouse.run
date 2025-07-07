@@ -8,9 +8,9 @@ import AnimatedBorderCard from '../components/AnimatedBorderCard '
 import Footer from '@/components/Footer'
 const Home = () => {
   return (
-    <div className='h-[2000px] mt-[60px]'>
+    <div className='mt-[60px] '>
       <HeroSection/>
-      <div className='max-w-[1400px] m-auto'>
+      <div className=' m-auto max-w-[1300px]'>
         <AnimatedGradientHeading text={"Learners Hired By Top Companies"} className={"md:text-4xl text-3xl -mt-8"}/>
         <Slider/>
 
