@@ -2,7 +2,7 @@ import React from 'react'
 import {Github, Linkedin, Twitter  } from "lucide-react"
 const Footer = () => {
   return (
-   <div className="grid grid-cols-1 md:grid-cols-6 gap-10 p-4 mb-20">
+   <div className="grid grid-cols-1 md:grid-cols-6 gap-10 p-4 mb-10 mt-8">
   <div className="md:col-span-3">
     <div><span className="font-bold text-xl">CodeHouse.run</span></div>
     <div className="mt-3">

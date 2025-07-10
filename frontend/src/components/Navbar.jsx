@@ -38,14 +38,14 @@ export function Navbar() {
           <div className="flex items-center justify-between">
             <div>
                <Link to={"/"}  className="flex items-center text-[var(--foreground)] transition-colors">    
-                  <span className="font-bold text-xl">CodeHouse.run</span>
+                  <span className="font-bold text-xl"><img src="http://localhost:5173/matecia-logo-3.png" alt="" className="w-25"/></span>
                 </Link>
               </div>
               <div>
                 <ul className="flex gap-7 text-lg  text-[var(--primary)]">
-                  <li className="px-7 cursor-pointer">Problem</li>
-                  <li className="px-7 cursor-pointer">Learn</li>
-                  <li className="px-7 cursor-pointer">About</li>
+                  <li className="px-7 cursor-pointer"><Link to={"/problem"}>Problem</Link></li>
+                  <li className="px-7 cursor-pointer"><Link to={"/learn"}>Learn</Link></li>
+                  <li className="px-7 cursor-pointer"><Link to={"/about"}>About</Link></li>
                 </ul>
               </div>
               <div className="flex items-center py-2">

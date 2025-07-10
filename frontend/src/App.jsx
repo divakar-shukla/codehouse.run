@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import Problem from "./pages/problem";
+import WorkSpace from "./pages/WorkSpace";
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
   localStorage.theme === "dark" ||
     (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
 );
-let authUser = true
+let authUser = false
   return (
     <div className="flex flex-col items-center justify-center">
       <Toaster/>
@@ -24,22 +25,28 @@ let authUser = true
            index
            element={<Home/> }
            />
-           <Route 
+         
+          <Route 
+          path="/register" 
+          element={<Register/>}
+          /> 
+          
+          <Route
+          path="/login" 
+          element={!authUser ? <Login/> : <Navigate to={"/"}/>}
+          />
+
+          <Route 
            path="problem"
            element={<Problem/>}
            />
-        </Route>
-        <Route
-         path="/" 
-         element={authUser ? <Home/> : <Navigate to={"/login"}/>}
-         />
 
-        <Route
-         path="/login" 
-         element={!authUser ? <Login/> : <Navigate to={"/"}/>}
-         />
-         
-        <Route path="/register" element={<Register/>}/>
+          <Route 
+           path="problem/:id"
+           element={<WorkSpace/>}
+           />
+
+        </Route>
         {/* <Route path="/About" element={<About/>}/> */}
       </Routes>
     </div>
