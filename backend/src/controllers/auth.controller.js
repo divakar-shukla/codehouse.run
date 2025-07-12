@@ -119,10 +119,10 @@ const logOut = asyncHandler(async (req, res) => {
 });
 
 const profile = asyncHandler(async (req, res) => {
-  const { userId } = req.user;
+  const { id } = req.user;
   const user = await db.user.findFirst({
     where: {
-      id: userId,
+      id: id,
     },
     select: {
       id: true,
@@ -132,7 +132,6 @@ const profile = asyncHandler(async (req, res) => {
       avatar: true,
     },
   });
-  console.log(user);
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User's profile fetched successfully"));

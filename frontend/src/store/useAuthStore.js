@@ -1,8 +1,10 @@
 import { create } from "zustand";
 import authService from "../lib/authService";
+import { persist } from 'zustand/middleware';
 import toast from "react-hot-toast";
 
 export const useAuthStore = create(
+  persist(
     (set) => ({
       authUser: null,
       isRegistering: false,
@@ -15,10 +17,11 @@ export const useAuthStore = create(
           const res = await authService.profile();
           console.log(res);
           set({ authUser: res.data });
-          toast.success(res.message);
+          if (res.success) {
+            return false;
+          }
+          return true;
         } catch (error) {
-          console.log("Something went wrong in fetch profile", error);
-          toast.error(error.response ? error.response.data.message : error.message);
           set({ authUser: null });
         } finally {
           set({ isGetingProfile: false });
@@ -32,7 +35,10 @@ export const useAuthStore = create(
           console.log(res);
           set({ authUser: res.data });
           toast.success(res.message);
-          return res.data;
+          if (res.success) {
+            return false;
+          }
+          return true;
         } catch (error) {
           console.log("Error while login", error);
           toast.error(error.response ? error.response.data.message : error.message);
@@ -50,6 +56,10 @@ export const useAuthStore = create(
           console.log(res);
           set({ authUser: res.data });
           toast.success(res.message);
+          if (res.success) {
+            return false;
+          }
+          return true;
         } catch (error) {
           console.error("Error while signing up", error);
           toast.error(error.response ? error.response.data.message : error.message);
@@ -62,13 +72,17 @@ export const useAuthStore = create(
       LogOut: async () => {
         try {
           const res = await authService.logOut();
-          console.log(res);
           set({ authUser: null });
           toast.success(res.message);
         } catch (error) {
           console.log("Error in logout processing", error);
-          toast.error(error.response ? error.response.data.message : error.message);
+          toast.error(error.response.data.message ? error.response.data.message : error.message);
         }
       },
-    })
+    }),
+    {
+      name: 'auth-store', // key in localStorage
+      partialize: (state) => ({ authUser: state.authUser }), // persist only authUser
+    }
+  )
 );

@@ -160,13 +160,3 @@
   animation: borderAnimate 3s linear infinite;
 }
 
-@layer utilities {
-  .bg-horizontal-golden-gradient {
-    background: linear-gradient(
-      to right,
-      rgba(231, 176, 8, 0.2) 0%,
-      #121212 50%,
-      rgba(231, 176, 8, 0.2) 100%
-    );
-  }
-}

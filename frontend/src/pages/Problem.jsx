@@ -6,7 +6,7 @@ const Problem = () => {
   return (
     <div className='max-w-[1300px] mt-30 m-auto'>
         <div className='w-full p-2'> 
-            <div class=" text-[var(--foreground)] text-3xl font-bold text-center">Explore Coding Challenges</div>
+            <div className=" text-[var(--foreground)] text-3xl font-bold text-center">Explore Coding Challenges</div>
             <div className='flex p-4 w-full justify-between mt-8 items-center py-4 bg-[var(--card)] rounded-sm'>
                 <h3 className='text-xl text-[var(--foreground)]'>All Problems</h3> 
                 <button className='bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer'>

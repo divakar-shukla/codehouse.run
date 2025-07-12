@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import AccountDropdown from "./AccountDropdown";
+import {useAuthStore} from "../store/useAuthStore"
 export function Navbar() {
   const [scrolled, setScrolled] =  useState(false)
     useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        console.log(scrolled)
-        console.log(window.scrollY)
+     
         setScrolled(true);
       } else {
         setScrolled(false);
@@ -18,6 +18,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const {authUser} = useAuthStore()
   return (
    <nav className="fixed w-full z-50 transition-all duration-300 backdrop-blur-sm top-0 left-0 mt-2">
     <div className="w-full d-flex justify-center">
@@ -49,7 +50,10 @@ export function Navbar() {
                 </ul>
               </div>
               <div className="flex items-center py-2">
-                <AccountDropdown className="border border-[var(--foreground)]"/>
+                {authUser ? (<AccountDropdown className="border border-[var(--foreground)]"/>) : (<Link to={"/login"}><button className='bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer'>
+                  Login/Register
+                </button></Link>)}
+                
               </div>
           </div>
         </div>

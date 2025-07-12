@@ -20,7 +20,7 @@ const authService = {
         return response.data
     },
     logOut:async () =>{
-        const response =  await axiosIntance.get("/user/login")
+        const response =  await axiosIntance.get("/user/logout")
         localStorage.removeItem(tokenKey.ACCESS_TOKEN) 
         localStorage.removeItem(tokenKey.REFRESH_TOKEN) 
         return response.data

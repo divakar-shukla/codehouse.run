@@ -1,23 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {Toaster} from "react-hot-toast"
-import Register from "./pages/Register";
+import AccountRegister from "./pages/Register";
 import {Route, Routes, Navigate} from "react-router-dom"
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import Problem from "./pages/problem";
 import WorkSpace from "./pages/WorkSpace";
+import {useAuthStore} from "./store/useAuthStore"
+import { useNavigate  } from "react-router-dom";
+import AdminLayout from "./layout/AdminLayout";
+import AddProblem from "./pages/AddProblem";
 
 
 function App() {
   document.documentElement.classList.toggle(
   "dark",
   localStorage.theme === "dark" ||
-    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+  (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
 );
-let authUser = false
+
+const {authUser, getProfile} = useAuthStore()
+const navigate = useNavigate();
+
+    const initProfile = async()=>{
+      
+    }
+    useEffect(()=>{
+    if(window.location.href !== "http://localhost:5173/login" && window.location.href !== "http://localhost:5173/register"){
+       (async () => {
+          await getProfile();
+       })();
+      }
+    
+    },[getProfile])
+
+  
+
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center"> 
       <Toaster/>
       <Routes>
         <Route path="/" element={<Layout/>}>
@@ -28,7 +49,7 @@ let authUser = false
          
           <Route 
           path="/register" 
-          element={<Register/>}
+          element={!authUser ? <AccountRegister/> : <Navigate to={"/"}/>}
           /> 
           
           <Route
@@ -38,15 +59,23 @@ let authUser = false
 
           <Route 
            path="problem"
-           element={<Problem/>}
+           element={authUser ? <Problem/> : <Navigate to={"/login"}/>}
            />
-
-          <Route 
-           path="problem/:id"
-           element={<WorkSpace/>}
-           />
-
         </Route>
+
+        <Route 
+           path="problem/:id"
+           element={authUser ?<WorkSpace/> : <Navigate to={"/login"}/>}
+        />
+
+        <Route 
+         path="/admin"
+         element={<AdminLayout/>}
+         >
+          <Route path="add-problem" element={<AddProblem/>}/>
+        
+
+         </Route>
         {/* <Route path="/About" element={<About/>}/> */}
       </Routes>
     </div>
