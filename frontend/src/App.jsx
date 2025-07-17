@@ -27,7 +27,7 @@ const navigate = useNavigate();
       
     }
     useEffect(()=>{
-    if(window.location.href !== "http://localhost:5173/login" && window.location.href !== "http://localhost:5173/register"){
+    if(window.location.href !== "http://localhost:5173/login" && window.location.href !== "http://localhost:5173/register" ){
        (async () => {
           await getProfile();
        })();
@@ -74,7 +74,6 @@ const navigate = useNavigate();
          >
           <Route path="add-problem" element={<AddProblem/>}/>
         
-
          </Route>
         {/* <Route path="/About" element={<About/>}/> */}
       </Routes>

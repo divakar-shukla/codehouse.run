@@ -1,8 +1,8 @@
-import React from 'react'
+import CreateProblem from '@/components/CreateProblem'
 
 const AddProblem = () => {
   return (
-    <div>Add Problem</div>
+    <div className='max-w-[1300px] w-full'><CreateProblem/></div>
   )
 }
 
