@@ -1,7 +1,8 @@
 const tokenKey = {
-    ACCESS_TOKEN:"accessToken",
-    REFRESH_TOKEN:"refreshToken",
-    USER:"user"
-}
+  ACCESS_TOKEN: "accessToken",
+  REFRESH_TOKEN: "refreshToken",
+  USER: "user",
+};
 
-export {tokenKey}
+const SUPPORT_LANGUAGE = ["JAVASCRIPT", "PYTHON", "JAVA"];
+export { tokenKey, SUPPORT_LANGUAGE };

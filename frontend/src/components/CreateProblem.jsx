@@ -1,9 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { addProblem } from "@/zodSchema/problem.schema";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, RotateCw, Plus } from "lucide-react";
+import {
+  BookOpen,
+  RotateCw,
+  Plus,
+  Trash2,
+  CheckCircle2,
+  Code2,
+  ChevronRight,
+  Lightbulb,
+} from "lucide-react";
 import FormInput from "@/components/FormInput";
 import {
   Select,
@@ -13,7 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
+import { SUPPORT_LANGUAGE } from "../utills/constants";
+import Editer from "@monaco-editor/react";
 const sampleStringProblem = {
   title: "Valid Palindrome",
   description:
@@ -474,7 +484,7 @@ const CreateProblem = () => {
     resolver: zodResolver(addProblem),
     defaultValues: {
       testcases: [{ input: "", output: "" }],
-      tags: ["  "],
+      tags: [""],
       examples: {
         JAVASCRIPT: { input: "", output: "", explanation: "" },
         PYTHON: { input: "", output: "", explanation: "" },
@@ -507,7 +517,7 @@ const CreateProblem = () => {
     fields: tagFields,
     append: appendTag,
     remove: removeTag,
-    replace: replaceTags,
+    replace: repalceTag,
   } = useFieldArray({
     control,
     name: "tags",
@@ -515,80 +525,111 @@ const CreateProblem = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const oonSubmit = async (value) => {
+  const onSubmit = async (value) => {
     console.log(value);
+    console.log("submit fired");
   };
 
   const loadSampleData = () => {
-    const sampleDataType =
+    console.log(sampleDataType);
+    const sampleData =
       sampleDataType == "DP" ? sampledpData : sampleStringProblem;
-    replaceTags(sampleDataType.tags.map((tag) => tag));
-    replaceTestcases(sampleDataType.testcases.map((tc) => tc));
+    repalceTag(sampleDataType.tags);
+    replaceTestcases(sampleDataType.testcases);
+    reset(sampleData);
   };
+  useEffect(() => {
+    if (tagFields.length === 0) {
+      appendTag("");
+    }
+  }, []);
   return (
-    <div className="mx-auto py-8 px-4 w-full">
-      <div className="flex justify-between mb-8 border-b bg-[var(--card)] px-4 py-2 rounded">
+    <div className="mx-auto py-8 px-4 w-full text-[var(--primary)]">
+      <div className="flex justify-between items-center mb-8 border-b bg-[var(--card)] px-4 py-2 rounded md:flex-row flex-col gap-3">
         <div className="flex items-center">
-          <h2 className="text-2xl text-[var(--foreground)] ">Create Problem</h2>
+          <h2 className="md:text-2xl text-lg  text-[var(--foreground)] ">
+            Create Problem
+          </h2>
         </div>
-        <div className="flex gap-5 items-end">
-          <button className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
-            DP Problem
-          </button>
-          <button className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
-            String Problem
-          </button>
-          <button className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
-            <RotateCw size={20} className="mr-2" />
-            Load problem
-          </button>
+        <div className="flex gap-2 items-start md:items-end md:flex-row flex-col ">
+          <div className="flex gap-2">
+            <button
+              className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              onClick={() => setSampleDataType("DP")}
+            >
+              DP Problem
+            </button>
+            <button
+              className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              onClick={() => setSampleDataType("String")}
+            >
+              String Problem
+            </button>
+          </div>
+          <div className="md:w-auto w-full flex justify-center">
+            <button
+              className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              onClick={() => loadSampleData()}
+            >
+              <RotateCw size={20} className="mr-2" />
+              Load problem
+            </button>
+          </div>
         </div>
       </div>
-      <form action="">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-[var(--card)] p-4 flex flex-col md:flex-row md:gap-4">
           <div className="w-full">
-            <div>
-              <FormInput
+            <div className="mb-6">
+              <input
                 {...register("title")}
                 type="text"
                 placeholder="Enter your problem's title"
-                className={"mb-6"}
+                className={
+                  " w-full bg-transparent p-2 placeholder:capitalize rounded-lg border focus:outline-1 focus:outline-[var(--foreground)]  placeholder:text-[var(--detail-font-color)] text-sm"
+                }
               />
               {errors.title && (
-                <p className="text-xs text-red-600">{errors.title.message}</p>
+                <p className="text-xs text-red-600 mt-2 ml-2">
+                  {errors.title.message}
+                  {console.log(errors)}
+                </p>
               )}
             </div>
 
-            <div>
-              <Select
-                className="focus:outline-1 focus:outline-[var(--foreground)]"
-                {...register("difficulty")}
-              >
-                <SelectTrigger className="w-full ">
-                  <SelectValue placeholder="Select Difficulty" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="EASY">Easy</SelectItem>
-                  <SelectItem value="MEDIUM">Medium</SelectItem>
-                  <SelectItem value="HARD">Hard</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="mb-6">
+              <Controller
+                name="difficulty"
+                control={control}
+                render={({ field }) => (
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <SelectTrigger className="w-full focus:outline-1 focus:outline-[var(--foreground)]">
+                      <SelectValue placeholder="Select Difficulty" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="EASY">Easy</SelectItem>
+                      <SelectItem value="MEDIUM">Medium</SelectItem>
+                      <SelectItem value="HARD">Hard</SelectItem>
+                    </SelectContent>
+                  </Select>
+                )}
+              />
               {errors.difficulty && (
-                <p className="text-xs text-red-600">
+                <p className="text-xs text-red-600 mt-2 ml-2">
                   {errors.difficulty.message}
                 </p>
               )}
             </div>
           </div>
-          <div className="w-full ">
+          <div className="w-full mb-6">
             <Textarea
               {...register("description")}
               placeholder="Enter You Problem Description"
-              className={"h-full mb-6"}
+              className={"h-full"}
             />
-            {errors.difficulty && (
-              <p className="text-xs text-red-600">
-                {errors.difficulty.message}
+            {errors.description && (
+              <p className="text-xs text-red-600 mt-2 ml-2">
+                {errors.description.message}
               </p>
             )}
           </div>
@@ -596,7 +637,7 @@ const CreateProblem = () => {
         <div className="bg-[var(--card)] p-4 mt-6">
           <div className="w-full flex justify-between ">
             <h3 className="text-lg text-[var(--primary)] flex items-center gap-2">
-              <BookOpen className="size-9" />
+              <BookOpen className="size-7" />
               Tags
             </h3>
             <button
@@ -608,20 +649,295 @@ const CreateProblem = () => {
               Add Tags
             </button>
           </div>
-          <div className="min-h-20 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="w-full border  mt-5 mb-5 h-[1px]"></div>
+          <div className="min-h-20 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 bg-[var(--background)] p-4 rounded">
             {tagFields.map((fields, index) => (
               <div key={fields.id} className="flex gap-2 items-center">
-                <FormInput
-                  {...register(`tags${index}`)}
-                  type="text"
-                  placeholder="Enter tags"
-                  className={"mb-6"}
-                />
+                <div>
+                  <input
+                    {...register(`tags.${index}`)}
+                    type="text"
+                    placeholder="Enter tags"
+                    className={
+                      "mb-6 w-full bg-transparent p-2 placeholder:capitalize rounded-lg border focus:outline-1 focus:outline-[var(--foreground)]  placeholder:text-[var(--detail-font-color)] text-sm "
+                    }
+                  />
+                </div>
+
+                <button
+                  className=""
+                  onClick={() => removeTag(index)}
+                  disabled={tagFields.length === 1}
+                >
+                  {" "}
+                  <Trash2 className="size-5 mb-6 text-red-600" />
+                </button>
               </div>
             ))}
+
+            {errors.tags && (
+              <div className="text-xs text-red-600 mt-2 ml-2">
+                {errors.tags?.root.message}
+                {console.log(errors)}
+              </div>
+            )}
+          </div>
+          {errors.tags && (
+            <div className="mt-2 ml-2">
+              <span className="text-error text-xs text-red-600">
+                {errors.tags.message}
+              </span>
+            </div>
+          )}
+        </div>
+        <div className="bg-[var(--card)] p-4 mt-6">
+          <div className="w-full flex justify-between">
+            <h3 className="text-lg text-[var(--primary)] flex items-center gap-2">
+              <CheckCircle2 className="size-7" />
+              Test Cases
+            </h3>
+            <button
+              type="button"
+              className="bg-[var(--primary)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              onClick={() => appendTestcases("")}
+            >
+              <Plus size={20} className="mr-2" />
+              Add Test Cases
+            </button>
+          </div>
+          <div className="w-full border border-[var(--sidebar-border)] mt-5 mb-5 h-[1px]"></div>
+          {testcasesFields.map((fields, index) => (
+            <div
+              key={fields.id}
+              className=" bg-[var(--background)] p-4 rounded mt-3"
+            >
+              <div className="flex justify-between items-center ">
+                <h4 className="text-[var(--primary)]">
+                  Test Case #{index + 1}
+                </h4>
+                <button
+                  className="bg-[var(--background)] text-[var(--primary)] py-2 px-4 text-sm rounded flex items-center cursor-pointer"
+                  onClick={() => removeTestcases(index)}
+                  disabled={testcasesFields.length === 1}
+                >
+                  <Trash2 className="size-5  text-red-600" />
+                </button>
+              </div>
+              <div className="min-h-20 grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+                <div className=" ">
+                  <Textarea
+                    {...register(`testcases.${index}.input`)}
+                    placeholder="Enter Your Test Case Input"
+                    className={"h-full"}
+                  />
+                  {errors.testcases?.[index]?.input && (
+                    <p className="text-xs text-red-600 mt-1 ml-1 ">
+                      {errors.testcases[index].input.message}
+                    </p>
+                  )}
+                </div>
+                <div className=" ">
+                  <Textarea
+                    {...register(`testcases.${index}.output`)}
+                    placeholder="Enter Expected Output"
+                    className={"h-full"}
+                  />
+                  {errors.testcases?.[index]?.output && (
+                    <p className="text-xs text-red-600 mt-1 ml-1">
+                      {errors.testcases[index].output.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {SUPPORT_LANGUAGE.map((language, index) => (
+          <div key={language}>
+            <div className="bg-[var(--card)] p-4 mt-6">
+              <div className="w-full flex justify-between">
+                <h3 className="text-lg text-[var(--primary)] flex items-center gap-2">
+                  <Code2 className="size-7" />
+                  {language}
+                </h3>
+              </div>
+              <div className="mt-3 bg-[var(--background)] p-4">
+                <h4 className="text-[var(--primary)]">Starter Code Template</h4>
+                <div className="border rounded-md overflow-hidden mt-2 bg-[var(--card)] p-2">
+                  <Controller
+                    name={`codeSnippets.${language}`}
+                    control={control}
+                    render={({ field }) => (
+                      <Editer
+                        height="300px"
+                        language={language.toLowerCase()}
+                        theme="vs-dark"
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={{
+                          minimap: { enabled: false },
+                          fontSize: 14,
+                          lineNumbers: "on",
+                          roundedSelection: true,
+                          scrollBeyondLastLine: false,
+                          automaticLayout: true,
+                          accessibilitySupport: "off",
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+                {errors.codeSnippets?.[language] && (
+                  <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      {errors.codeSnippets[language].message}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="mt-3 bg-[var(--background)] p-4">
+                <h4 className="text-[var(--primary)]">Reference Solution</h4>
+                <div className="border rounded-md overflow-hidden mt-2 bg-[var(--card)] p-2">
+                  <Controller
+                    name={`referenceSolutions.${language}`}
+                    control={control}
+                    render={({ field }) => (
+                      <Editer
+                        height="300px"
+                        language={language.toLowerCase()}
+                        theme="vs-dark"
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={{
+                          minimap: { enabled: false },
+                          fontSize: 14,
+                          lineNumbers: "on",
+                          roundedSelection: true,
+                          scrollBeyondLastLine: false,
+                          automaticLayout: true,
+                        }}
+                      />
+                    )}
+                  />
+                </div>
+                {errors.referenceSolutions?.[language] && (
+                  <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      {errors.referenceSolutions[language].message}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="mt-3 bg-[var(--background)] p-4">
+                <h4 className="text-[var(--primary)]">Example</h4>
+                <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="col-span-1">
+                    <Textarea
+                      {...register(`examples.${language}.input`)}
+                      placeholder="Enter Your Example Input"
+                      className={""}
+                    />
+                    {errors.examples?.[language]?.input && (
+                      <div className="mt-2">
+                        <span className="text-xs text-red-600">
+                          {errors.examples?.[language].input.message}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="col-span-1">
+                    <Textarea
+                      {...register(`examples.${language}.input`)}
+                      placeholder="Enter Your Example Output"
+                      className={""}
+                    />
+                    {errors.examples?.[language]?.output && (
+                      <div className="mt-2">
+                        <span className="text-xs text-red-600">
+                          {errors.examples?.[language].output.message}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="md:col-span-2 col-span-1">
+                    <Textarea
+                      {...register(`examples.${language}.explanation`)}
+                      placeholder="Enter Your Explanation of Example"
+                      className={""}
+                    />
+                    {errors.examples?.[language]?.explanation && (
+                      <div className="mt-2">
+                        <span className="text-xs text-red-600">
+                          {errors.examples?.[language].explanation}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className="bg-[var(--card)] p-4 mt-6">
+          <div className="w-full flex justify-between">
+            <h3 className="text-lg text-[var(--primary)] flex items-center gap-2">
+              <Lightbulb className="size-7" /> Additional Information
+            </h3>
+          </div>
+          <div className="bg-[var(--background)] p-4 rounded mt-3">
+            <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
+              <div className="col-span-1">
+                <Textarea
+                  {...register("constraints")}
+                  placeholder="Enter Problem Constraints"
+                  className={""}
+                />
+                {errors.constraints && (
+                  <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      {errors.constraints?.message}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="col-span-1">
+                <Textarea
+                  {...register("hints")}
+                  placeholder="Enter Hints(Optional)"
+                  className={""}
+                />
+                {errors.hints && (
+                  <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      {errors.hints?.message}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="md:col-span-2 col-span-1">
+                <Textarea
+                  {...register("editorial")}
+                  placeholder="Enter Editorial(Optional)"
+                  className={""}
+                />
+                {errors.editorial && (
+                  <div className="mt-2">
+                    <span className="text-xs text-red-600">
+                      {errors.editorial?.message}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-        <button type="submit">dsbh</button>
+        <div className="flex items-center justify-center mt-4">
+          <button className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
+            <ChevronRight size={20} className="mr-2" />
+            Create Problem
+          </button>
+        </div>
       </form>
     </div>
   );
