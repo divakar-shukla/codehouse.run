@@ -12,6 +12,7 @@ import {
   Code2,
   ChevronRight,
   Lightbulb,
+  LoaderCircle,
 } from "lucide-react";
 import FormInput from "@/components/FormInput";
 import {
@@ -24,6 +25,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { SUPPORT_LANGUAGE } from "../utills/constants";
 import Editer from "@monaco-editor/react";
+import problemService from "@/lib/problemService";
+import toast from "react-hot-toast";
+
 const sampleStringProblem = {
   title: "Valid Palindrome",
   description:
@@ -471,6 +475,7 @@ const sampledpData = {
 
 const CreateProblem = () => {
   const navigation = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [sampleDataType, setSampleDataType] = useState("DP");
 
@@ -523,11 +528,21 @@ const CreateProblem = () => {
     name: "tags",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { addProblemQuery } = problemService;
 
   const onSubmit = async (value) => {
-    console.log(value);
-    console.log("submit fired");
+    try {
+      setIsLoading(true);
+      console.log();
+      const response = await addProblemQuery(value);
+      toast.success(response.message);
+      setIsLoading(true);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loadSampleData = () => {
@@ -554,13 +569,21 @@ const CreateProblem = () => {
         <div className="flex gap-2 items-start md:items-end md:flex-row flex-col ">
           <div className="flex gap-2">
             <button
-              className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              className={` py-2 px-3 text-sm rounded flex items-center cursor-pointer ${
+                sampleDataType === "DP"
+                  ? "bg-[var(--primary)] text-[var(--background)]"
+                  : "bg-[var(--background)] text-[var(--primary)]"
+              }`}
               onClick={() => setSampleDataType("DP")}
             >
               DP Problem
             </button>
             <button
-              className="bg-[var(--background)] text-[var(--primary)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+              className={` py-2 px-3 text-sm rounded flex items-center cursor-pointer ${
+                sampleDataType !== "DP"
+                  ? "bg-[var(--primary)] text-[var(--background)]"
+                  : "bg-[var(--background)] text-[var(--primary)]"
+              }`}
               onClick={() => setSampleDataType("String")}
             >
               String Problem
@@ -581,14 +604,19 @@ const CreateProblem = () => {
         <div className="bg-[var(--card)] p-4 flex flex-col md:flex-row md:gap-4">
           <div className="w-full">
             <div className="mb-6">
-              <input
-                {...register("title")}
-                type="text"
-                placeholder="Enter your problem's title"
-                className={
-                  " w-full bg-transparent p-2 placeholder:capitalize rounded-lg border focus:outline-1 focus:outline-[var(--foreground)]  placeholder:text-[var(--detail-font-color)] text-sm"
-                }
-              />
+              <div>
+                <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                  Title
+                </label>
+                <input
+                  {...register("title")}
+                  type="text"
+                  placeholder="Enter your problem's title"
+                  className={
+                    " w-full bg-transparent p-2 placeholder:capitalize rounded-lg border focus:outline-1 focus:outline-[var(--foreground)]  placeholder:text-[var(--detail-font-color)] text-sm"
+                  }
+                />
+              </div>
               {errors.title && (
                 <p className="text-xs text-red-600 mt-2 ml-2">
                   {errors.title.message}
@@ -598,22 +626,27 @@ const CreateProblem = () => {
             </div>
 
             <div className="mb-6">
-              <Controller
-                name="difficulty"
-                control={control}
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger className="w-full focus:outline-1 focus:outline-[var(--foreground)]">
-                      <SelectValue placeholder="Select Difficulty" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="EASY">Easy</SelectItem>
-                      <SelectItem value="MEDIUM">Medium</SelectItem>
-                      <SelectItem value="HARD">Hard</SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
+              <div>
+                <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                  Difficulty
+                </label>
+                <Controller
+                  name="difficulty"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full focus:outline-1 focus:outline-[var(--foreground)]">
+                        <SelectValue placeholder="Select Difficulty" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="EASY">Easy</SelectItem>
+                        <SelectItem value="MEDIUM">Medium</SelectItem>
+                        <SelectItem value="HARD">Hard</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
               {errors.difficulty && (
                 <p className="text-xs text-red-600 mt-2 ml-2">
                   {errors.difficulty.message}
@@ -622,11 +655,16 @@ const CreateProblem = () => {
             </div>
           </div>
           <div className="w-full mb-6">
-            <Textarea
-              {...register("description")}
-              placeholder="Enter You Problem Description"
-              className={"h-full"}
-            />
+            <div className="h-[90%]">
+              <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                Description
+              </label>
+              <Textarea
+                {...register("description")}
+                placeholder="Enter You Problem Description"
+                className={"h-full"}
+              />
+            </div>
             {errors.description && (
               <p className="text-xs text-red-600 mt-2 ml-2">
                 {errors.description.message}
@@ -725,10 +763,13 @@ const CreateProblem = () => {
               </div>
               <div className="min-h-20 grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                 <div className=" ">
+                  <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                    Input
+                  </label>
                   <Textarea
                     {...register(`testcases.${index}.input`)}
                     placeholder="Enter Your Test Case Input"
-                    className={"h-full"}
+                    className={""}
                   />
                   {errors.testcases?.[index]?.input && (
                     <p className="text-xs text-red-600 mt-1 ml-1 ">
@@ -737,10 +778,13 @@ const CreateProblem = () => {
                   )}
                 </div>
                 <div className=" ">
+                  <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                    Output
+                  </label>
                   <Textarea
                     {...register(`testcases.${index}.output`)}
                     placeholder="Enter Expected Output"
-                    className={"h-full"}
+                    className={""}
                   />
                   {errors.testcases?.[index]?.output && (
                     <p className="text-xs text-red-600 mt-1 ml-1">
@@ -762,6 +806,7 @@ const CreateProblem = () => {
                   {language}
                 </h3>
               </div>
+              <div className="w-full border  mt-5 mb-5 h-[1px]"></div>
               <div className="mt-3 bg-[var(--background)] p-4">
                 <h4 className="text-[var(--primary)]">Starter Code Template</h4>
                 <div className="border rounded-md overflow-hidden mt-2 bg-[var(--card)] p-2">
@@ -833,6 +878,9 @@ const CreateProblem = () => {
                 <h4 className="text-[var(--primary)]">Example</h4>
                 <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="col-span-1">
+                    <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                      Input
+                    </label>
                     <Textarea
                       {...register(`examples.${language}.input`)}
                       placeholder="Enter Your Example Input"
@@ -847,8 +895,11 @@ const CreateProblem = () => {
                     )}
                   </div>
                   <div className="col-span-1">
+                    <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                      Output
+                    </label>
                     <Textarea
-                      {...register(`examples.${language}.input`)}
+                      {...register(`examples.${language}.output`)}
                       placeholder="Enter Your Example Output"
                       className={""}
                     />
@@ -861,6 +912,9 @@ const CreateProblem = () => {
                     )}
                   </div>
                   <div className="md:col-span-2 col-span-1">
+                    <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                      Explanation
+                    </label>
                     <Textarea
                       {...register(`examples.${language}.explanation`)}
                       placeholder="Enter Your Explanation of Example"
@@ -885,9 +939,13 @@ const CreateProblem = () => {
               <Lightbulb className="size-7" /> Additional Information
             </h3>
           </div>
+          <div className="w-full border  mt-5 mb-5 h-[1px]"></div>
           <div className="bg-[var(--background)] p-4 rounded mt-3">
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4">
               <div className="col-span-1">
+                <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                  Constraints
+                </label>
                 <Textarea
                   {...register("constraints")}
                   placeholder="Enter Problem Constraints"
@@ -902,6 +960,9 @@ const CreateProblem = () => {
                 )}
               </div>
               <div className="col-span-1">
+                <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                  Hints
+                </label>
                 <Textarea
                   {...register("hints")}
                   placeholder="Enter Hints(Optional)"
@@ -916,6 +977,9 @@ const CreateProblem = () => {
                 )}
               </div>
               <div className="md:col-span-2 col-span-1">
+                <label className="text-sm ml-2 text-[var(--detail-font-color)]">
+                  Editorial
+                </label>
                 <Textarea
                   {...register("editorial")}
                   placeholder="Enter Editorial(Optional)"
@@ -933,8 +997,19 @@ const CreateProblem = () => {
           </div>
         </div>
         <div className="flex items-center justify-center mt-4">
-          <button className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
-            <ChevronRight size={20} className="mr-2" />
+          <button
+            className={` text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer ${
+              isLoading
+                ? "bg-[var(--muted-foreground)]"
+                : "bg-[var(--foreground)]"
+            }`}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <LoaderCircle className="size-5 animate-spin mr-2" />
+            ) : (
+              <ChevronRight size={20} className="mr-2" />
+            )}
             Create Problem
           </button>
         </div>

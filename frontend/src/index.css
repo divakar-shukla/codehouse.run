@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -44,8 +43,8 @@
 :root {
   --radius: 0.625rem;
   --background: #ffffff;
-  --foreground: #eab308 ;
-  --card: #ffffff; 
+  --foreground: #eab308;
+  --card: #ffffff;
   --card-foreground: #030712;
   --popover: #d6d6d6;
   --popover-foreground: #030712;
@@ -74,11 +73,11 @@
   --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
-  --detail-font-color:#414141;
+  --detail-font-color: #414141;
 }
 
 .dark {
-  --background:#121212;
+  --background: #121212;
   --foreground: rgb(231, 176, 8);
   --card: #181818;
   --card-foreground: oklch(0.985 0.002 247.839);
@@ -96,7 +95,7 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);  
+  --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
@@ -109,9 +108,8 @@
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
-  --detail-font-color:#85a1b7;
+  --detail-font-color: #85a1b7;
 }
-
 
 @layer base {
   * {
@@ -119,14 +117,14 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
-  code, pre {
-    font-family: 'Fira Code', monospace;
+  code,
+  pre {
+    font-family: "Fira Code", monospace;
   }
 }
-
 
 @keyframes borderAnimate {
   0% {
@@ -151,7 +149,7 @@
 }
 
 .animateCard-position-on-hover:hover {
-  animation: animatePosition 1s ease-in ;
+  animation: animatePosition 1s ease-in;
 }
 
 .animate-border-on-hover {
@@ -160,3 +158,23 @@
   animation: borderAnimate 3s linear infinite;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px #0f172a inset !important; /* e.g. slate-900 */
+  -webkit-text-fill-color: #f1f5f9 !important; /* e.g. slate-100 */
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+animation: var(--animate-spin);
+/* spin 1s linear infinite */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
