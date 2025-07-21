@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { addProblem } from "@/zodSchema/problem.schema";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   BookOpen,
   RotateCw,
@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Lightbulb,
   LoaderCircle,
+  House,
 } from "lucide-react";
 import FormInput from "@/components/FormInput";
 import {
@@ -298,23 +299,32 @@ const sampledpData = {
           rl.close();
           });`,
     PYTHON: `class Solution:
-            def climbStairs(self, n: int) -> int:
-                # Write your code here
-                pass          
+    def climbStairs(self, n: int) -> int:
+        # Base cases
+        if n <= 2:
+            return n
 
-          # Input parsing
-          if __name__ == "__main__":
-            import sys
-            
-            # Parse input
-            n = int(sys.stdin.readline().strip())
-            
-            # Solve
-            sol = Solution()
-            result = sol.climbStairs(n)
-            
-            # Print result
-            print(result)`,
+        # DP approach
+        a, b = 1, 2
+        for _ in range(3, n + 1):
+            a, b = b, a + b
+        return b
+
+
+# Input parsing
+if __name__ == "__main__":
+    import sys
+
+    # Parse input
+    n = int(sys.stdin.readline().strip())
+
+    # Solve
+    sol = Solution()
+    result = sol.climbStairs(n)
+
+    # Print result
+    print(result)
+`,
     JAVA: `import java.util.Scanner;          
 
           class Main {
@@ -388,42 +398,42 @@ const sampledpData = {
           rl.close();
           });`,
     PYTHON: `class Solution:
-            def climbStairs(self, n: int) -> int:
-                # Base cases
-                if n <= 2:
-                    return n
-                
-                # Dynamic programming approach
-                dp = [0] * (n + 1)
-                dp[1] = 1
-                dp[2] = 2
-                
-                for i in range(3, n + 1):
-                    dp[i] = dp[i - 1] + dp[i - 2]
-                
-                return dp[n]
-                
-                # Alternative approach with O(1) space
-                # a, b = 1, 2
-                # 
-                # for i in range(3, n + 1):
-                #     a, b = b, a + b
-                # 
-                # return a if n == 1 else b          
+    def climbStairs(self, n: int) -> int:
+        # Base cases
+        if n <= 2:
+            return n
 
-          # Input parsing
-          if __name__ == "__main__":
-            import sys
-            
-            # Parse input
-            n = int(sys.stdin.readline().strip())
-            
-            # Solve
-            sol = Solution()
-            result = sol.climbStairs(n)
-            
-            # Print result
-            print(result)`,
+        # Dynamic programming approach
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
+
+        for i in range(3, n + 1):
+            dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[n]
+
+        # Alternative approach with O(1) space
+        # a, b = 1, 2
+        # for i in range(3, n + 1):
+        #     a, b = b, a + b
+        # return a if n == 1 else b
+
+
+# Input parsing
+if __name__ == "__main__":
+    import sys
+
+    # Parse input
+    n = int(sys.stdin.readline().strip())
+
+    # Solve
+    sol = Solution()
+    result = sol.climbStairs(n)
+
+    # Print result
+    print(result)
+`,
     JAVA: `import java.util.Scanner;          
 
           class Main {
@@ -561,7 +571,14 @@ const CreateProblem = () => {
   return (
     <div className="mx-auto py-8 px-4 w-full text-[var(--primary)]">
       <div className="flex justify-between items-center mb-8 border-b bg-[var(--card)] px-4 py-2 rounded md:flex-row flex-col gap-3">
-        <div className="flex items-center">
+        <div className="flex items-center ">
+          <div>
+            <Link to="/">
+              {" "}
+              <House size={25} className="text-[var(--foreground)]" />
+            </Link>
+          </div>
+          <div className="w-0.5 h-7 m-2 bg-[var(--primary)]"></div>
           <h2 className="md:text-2xl text-lg  text-[var(--foreground)] ">
             Create Problem
           </h2>

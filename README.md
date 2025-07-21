@@ -30,7 +30,7 @@
 
 - **Frontend**: React.js, Tailwind CSS
 - **Backend**: Node.js, Express.js
-- **Database**: MongoDB
+- **Database**: PostgreSQL
 - **Editor**: Monaco Editor
 - **Code Execution Engine**: Judge0
 - **Other Tools**: Zustand, Axios, JWT, Cloudinary, etc.

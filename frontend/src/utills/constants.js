@@ -5,5 +5,6 @@ const tokenKey = {
 };
 
 const SUPPORT_LANGUAGE = ["JAVASCRIPT", "PYTHON", "JAVA"];
+const DIFFICULTIES = ["EASY", "MEDIUM", "HARD"];
 
-export { tokenKey, SUPPORT_LANGUAGE };
+export { tokenKey, SUPPORT_LANGUAGE, DIFFICULTIES };

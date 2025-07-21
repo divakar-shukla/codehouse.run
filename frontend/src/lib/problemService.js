@@ -24,12 +24,8 @@ const problemService = {
     console.log(response);
     return response.data;
   },
-  deleteProblemQuery: async (id, value) => {
-    const response = axiosIntance.delete(
-      `/problem/delete-problem/${id}`,
-      value,
-    );
-    console.log(response);
+  deleteProblemQuery: async (id) => {
+    const response = await axiosIntance.delete(`/problem/delete-problem/${id}`);
     return response.data;
   },
   getSolvedProblemQuery: async () => {

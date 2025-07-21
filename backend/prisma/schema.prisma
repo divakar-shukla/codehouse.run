@@ -145,6 +145,6 @@ model FavouriteList {
   problemId String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User     @relation(fields: [userId], references: [id])
-  Problem   Problem  @relation(fields: [problemId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
 }
