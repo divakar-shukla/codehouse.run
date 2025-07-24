@@ -25,13 +25,16 @@ import toast from "react-hot-toast";
 
 const Problem = () => {
   const { authUser } = useAuthStore();
-  const { getAllProblems, getingProblems, problems } = useProblemStore();
+  const problems = useProblemStore((state) => state.problems);
+  const getAllProblems = useProblemStore((state) => state.getAllProblems);
+  const gettingProblems = useProblemStore((state) => state.getingProblems);
   const [searchFilter, setSearchFilter] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
   const [tagFilter, setTagFilter] = useState("all");
   const [savingProblem, setSavingProblem] = useState();
   const [deletingProblem, setDeletingProblem] = useState();
   const { deleteProblemQuery } = problemService;
+
   useEffect(() => {
     (async () => {
       await getAllProblems();
@@ -41,12 +44,12 @@ const Problem = () => {
   const allTags = useMemo(() => {
     if (!Array.isArray(problems)) return [];
     const tagSet = new Set();
-    problems.forEach((p) => p.tags.forEach((t) => tagSet.add(t.toLowerCase())));
+    problems.forEach((p) => p.tags.forEach((t) => tagSet.add(t.toUpperCase())));
     return Array.from(tagSet);
   }, [problems]);
 
   const filterdProblem = useMemo(() => {
-    return (problems || [])
+    const ff = (problems || [])
       .filter((problem) =>
         searchFilter == ""
           ? true
@@ -57,9 +60,14 @@ const Problem = () => {
           ? true
           : problem.difficulty === difficultyFilter,
       )
-      .filter((problem) =>
-        tagFilter == "all" ? true : problem.tags.includes(tagFilter),
-      );
+      .filter((problem) => {
+        return tagFilter == "all"
+          ? true
+          : problem.tags.map((p) => p.toUpperCase()).includes(tagFilter);
+      });
+    // console.log("njfdff", ff);
+    // console.log("prprprp", problems);
+    return ff;
   }, [problems, searchFilter, difficultyFilter, tagFilter]);
 
   const deleteProblem = async (id) => {
@@ -67,6 +75,7 @@ const Problem = () => {
     try {
       setDeletingProblem(true);
       const response = await deleteProblemQuery(id);
+      const res = await getAllProblems();
       setRandom(Math.random());
       console.log(response);
       toast.success(response.message);
@@ -95,13 +104,14 @@ const Problem = () => {
       </div>
     );
   }
-  if (getingProblems) {
+  if (gettingProblems) {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <Loader className="size-10 animate-spin" />
       </div>
     );
   }
+  console.log(problems);
   return (
     <div className="max-w-[1300px] mt-30 m-auto">
       <div className="w-full p-2">
@@ -151,7 +161,7 @@ const Problem = () => {
             >
               <option value="all">All Tags</option>
               {allTags.map((t) => (
-                <option key={t} value={t}>
+                <option key={t} value={t.toUpperCase()}>
                   {t[0].toUpperCase() + t.slice(1).toLowerCase()}
                 </option>
               ))}
@@ -221,7 +231,9 @@ const Problem = () => {
                             <>
                               <div className="bg-[var(--secondary)] p-2 rounded cursor-pointer">
                                 <Tooltip>
-                                  <Link to={`/problem/edit/${problem.id}`}>
+                                  <Link
+                                    to={`/admin/edit-problem/${problem.id}`}
+                                  >
                                     <TooltipTrigger asChild>
                                       <Pencil size={18} />
                                     </TooltipTrigger>

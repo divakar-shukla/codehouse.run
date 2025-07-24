@@ -67,6 +67,8 @@ const createProblem = asyncHandler(async (req, res) => {
         difficulty,
         tags,
         examples,
+        hints,
+        editorial,
         constraints,
         testcases,
         codeSnippets,

@@ -15,18 +15,64 @@ const useProblemStore = create((set) => ({
   solvedProblems: [],
   getingProblems: false,
   getingProblem: false,
+  getingSolvedProblem: false,
 
   getAllProblems: async () => {
     try {
       set({ getingProblems: true });
       const response = await getProblemsQuery();
       set({ problems: response.data });
+      console.log(response);
       return response.data;
     } catch (error) {
       set({ problems: [] });
       toast.error(error.response.data.message);
     } finally {
       set({ getingProblems: false });
+    }
+  },
+  getProblemById: async (id) => {
+    try {
+      set({ getingProblem: true });
+      const response = await getProblemByIdQuery(id);
+      set({ problem: response.data });
+    } catch (error) {
+      set({ problem: null });
+      toast.error(error.response.data.message);
+    } finally {
+      set({ getingProblem: false });
+    }
+  },
+  editProblem: async (values, id) => {
+    try {
+      const response = await updateProblemQuery(values, id);
+      toast.success(response.data.message);
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  },
+  deleteProblem: async (id) => {
+    try {
+      const response = await deleteProblemQuery(id);
+      toast.success(response.data.message);
+      return response.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  },
+  getSolvedProblem: async () => {
+    try {
+      set({ getingSolvedProblem: true });
+      const response = await getSolvedProblemQuery();
+      set({ solvedProblems: response.data });
+      toast.success(response.data.message);
+      return response.data;
+    } catch (error) {
+      set({ getingSolvedProblem: null });
+      toast.error(error.response.data.message);
+    } finally {
+      set({ getingSolvedProblem: false });
     }
   },
 }));

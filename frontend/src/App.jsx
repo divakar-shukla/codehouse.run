@@ -11,6 +11,8 @@ import { useAuthStore } from "./store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "./layout/AdminLayout";
 import AddProblem from "./pages/AddProblem";
+import { Edit } from "lucide-react";
+import EditProblem from "./pages/EditProblem";
 
 function App() {
   document.documentElement.classList.toggle(
@@ -64,6 +66,7 @@ function App() {
 
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="add-problem" element={<AddProblem />} />
+          <Route path="edit-problem/:id" element={<EditProblem />} />
         </Route>
         {/* <Route path="/About" element={<About/>}/> */}
       </Routes>

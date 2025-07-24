@@ -8,19 +8,17 @@ const problemService = {
   },
   getProblemsQuery: async () => {
     const response = await axiosIntance.get(`/problem/get-all-problem`);
-    console.log(response);
     return response.data;
   },
   getProblemByIdQuery: async (id) => {
-    const response = await axiosIntance.post(
-      `/problem/get-problem/${id}`,
-      value,
-    );
-    console.log(response);
+    const response = await axiosIntance.get(`/problem/get-problem/${id}`);
     return response.data;
   },
-  updateProblemQuery: async (id, value) => {
-    const response = axiosIntance.put(`/problem/upadate-problem/${id}`, value);
+  updateProblemQuery: async (value, id) => {
+    const response = await axiosIntance.put(
+      `/problem/upadate-problem/${id}`,
+      value,
+    );
     console.log(response);
     return response.data;
   },
