@@ -36,16 +36,11 @@ const UpdateProblem = () => {
   const getingProblem = useProblemStore((state) => state.getingProblem);
   const { id } = useParams();
 
-  useEffect(() => {
-    (async () => {
-      await getProblemById(id);
-      console.log(problem);
-    })();
-  }, [getProblemById, id]);
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(addProblem),
@@ -83,7 +78,15 @@ const UpdateProblem = () => {
       setIsUpdating(false);
     }
   };
+  useEffect(() => {
+    (async () => {
+      const response = await getProblemById(id);
+    })();
+  }, [id]);
 
+  useEffect(() => {
+    reset(problem);
+  }, [problem]);
   if (getingProblem) {
     return (
       <div className="flex items-center justify-center h-screen w-full">

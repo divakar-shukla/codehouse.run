@@ -1,6 +1,7 @@
 import problemService from "@/lib/problemService";
 import { create } from "zustand";
 import toast from "react-hot-toast";
+import usePlayListStore from "./usePlayListStore";
 const {
   getProblemsQuery,
   getProblemByIdQuery,
@@ -36,9 +37,11 @@ const useProblemStore = create((set) => ({
       set({ getingProblem: true });
       const response = await getProblemByIdQuery(id);
       set({ problem: response.data });
+      return true;
     } catch (error) {
       set({ problem: null });
       toast.error(error.response.data.message);
+      return false;
     } finally {
       set({ getingProblem: false });
     }

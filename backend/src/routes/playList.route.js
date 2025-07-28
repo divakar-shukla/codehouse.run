@@ -1,5 +1,6 @@
 import express from "express";
-import isLogin from "../middleware/login.middleware.js";import {
+import isLogin from "../middleware/login.middleware.js";
+import {
   addProblemToPlaylist,
   createPlaylist,
   deletePlayList,
@@ -13,7 +14,12 @@ import isLogin from "../middleware/login.middleware.js";import {
 //   getDeletePlaylistValidator,
 // } from ".../validator/playlist.Validator.js";
 import validate from "../middleware/validator-middleware.js";
-import { addProblemToPlaylistValidator, removeProblemToPlaylistValidator, createPlaylistValidator, getDeletePlaylistValidator } from "../validator/playlist.validator.js";
+import {
+  addProblemToPlaylistValidator,
+  removeProblemToPlaylistValidator,
+  createPlaylistValidator,
+  getDeletePlaylistValidator,
+} from "../validator/playlist.validator.js";
 
 const playListRoute = express.Router();
 playListRoute.route("/").get(isLogin, getAllPlaylistDetails);

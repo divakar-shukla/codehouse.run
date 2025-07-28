@@ -3,7 +3,6 @@ import ApiError from "../utills/api-error.js";
 
 const validate = (req, res, next) => {
   // const error = validationResult(req);
-
   const error = validationResult(req);
   //  console.log(error)
   if (error.isEmpty()) {

@@ -19,9 +19,21 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 import problemService from "@/lib/problemService";
 import toast from "react-hot-toast";
+import usePlayListStore from "@/store/usePlayListStore";
+import { Textarea } from "@/components/ui/textarea";
 
 const Problem = () => {
   const { authUser } = useAuthStore();
@@ -34,11 +46,25 @@ const Problem = () => {
   const [savingProblem, setSavingProblem] = useState();
   const [deletingProblem, setDeletingProblem] = useState();
   const { deleteProblemQuery } = problemService;
+  const [playListName, setPlayListName] = useState("");
+  const [playListDes, setPlayListDes] = useState("");
+  const [saveInPlayList, setSaveInPlayList] = useState("");
+  const [SaveProblemId, setSaveProblemId] = useState("");
+  const allPlaylists = usePlayListStore((state) => state.allPlaylists);
+  const playList = usePlayListStore((state) => state.playList);
+  const {
+    createPlayList,
+    getPlayListById,
+    addProblemInPlayList,
+    getAllPlayList,
+    isLoading,
+  } = usePlayListStore();
+  useEffect(() => {
+    getAllPlayList();
+  }, []);
 
   useEffect(() => {
-    (async () => {
-      await getAllProblems();
-    })();
+    getAllProblems();
   }, [getAllProblems]);
 
   const allTags = useMemo(() => {
@@ -65,8 +91,7 @@ const Problem = () => {
           ? true
           : problem.tags.map((p) => p.toUpperCase()).includes(tagFilter);
       });
-    // console.log("njfdff", ff);
-    // console.log("prprprp", problems);
+
     return ff;
   }, [problems, searchFilter, difficultyFilter, tagFilter]);
 
@@ -76,21 +101,27 @@ const Problem = () => {
       setDeletingProblem(true);
       const response = await deleteProblemQuery(id);
       const res = await getAllProblems();
-      setRandom(Math.random());
       console.log(response);
       toast.success(response.message);
       <Navigate to="/problem" />;
     } catch (error) {
-      console.error(error);
       toast.error(error.response.data.message);
     } finally {
       setDeletingProblem(false);
     }
   };
+  const createPlayListFunc = async () => {
+    const res = await createPlayList({
+      name: playListName,
+      description: playListDes,
+    });
+  };
 
-  const saveProblem = async (id) => {};
+  const saveProblem = async () => {
+    await addProblemInPlayList(SaveProblemId, saveInPlayList);
+  };
 
-  if (savingProblem) {
+  if (savingProblem || isLoading) {
     return (
       <div className="flex items-center justify-center h-screen w-full">
         <Loader className="size-10 animate-spin" />
@@ -111,7 +142,6 @@ const Problem = () => {
       </div>
     );
   }
-  console.log(problems);
   return (
     <div className="max-w-[1300px] mt-30 m-auto">
       <div className="w-full p-2">
@@ -120,10 +150,70 @@ const Problem = () => {
         </div>
         <div className="flex p-4 w-full justify-between mt-8 items-center py-4 bg-[var(--card)] rounded-sm">
           <h3 className="text-xl text-[var(--foreground)]">All Problems</h3>
-          <button className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer">
-            <Plus className="mr-2 size-4" />
-            Create PlayList
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                className="bg-[var(--foreground)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+                onClick={() => {
+                  setPlayListDes("");
+                  setPlayListName("");
+                }}
+              >
+                <Plus className="mr-2 size-4" />
+                Create PlayList
+              </button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Edit profile</DialogTitle>
+                <DialogDescription>
+                  Create Playlist and save problems that you want to solve
+                  later.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4">
+                <div className="grid gap-3">
+                  <div>
+                    <label className="text-[var(--detail-font-color)] text-sm mr-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Enter your playlist name"
+                      className={
+                        " w-full bg-transparent p-2  placeholder:capitalize rounded-lg border focus:outline-1 focus:outline-[var(--foreground)]  placeholder:text-[var(--detail-font-color)] text-sm"
+                      }
+                      value={playListName}
+                      onChange={(e) => {
+                        setPlayListName(e.target.value);
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="grid gap-3">
+                  <div>
+                    <label className="text-[var(--detail-font-color)] text-sm mr-2">
+                      Discription
+                    </label>
+                    <Textarea
+                      onChange={(e) => setPlayListDes(e.target.value)}
+                      value={playListDes}
+                    />
+                  </div>
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <button
+                    className="bg-[var(--primary)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+                    onClick={createPlayListFunc}
+                  >
+                    Create
+                  </button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 bg-[var(--card)] py-6 px-4 rounded-sm">
           <div className="flex items-center bg-[var(--primary)] rounded">
@@ -262,10 +352,68 @@ const Problem = () => {
                             ""
                           )}
 
-                          <div className="bg-[var(--secondary)] p-2 rounded cursor-pointer">
+                          <div
+                            className="bg-[var(--secondary)] p-2 rounded cursor-pointer"
+                            onClick={() => setSaveProblemId(problem.id)}
+                          >
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <BookmarkPlus size={18} />
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <BookmarkPlus size={18} />
+                                  </DialogTrigger>
+                                  <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                      <DialogTitle>Playlist</DialogTitle>
+                                      <DialogDescription>
+                                        Select playlist in what you want to save
+                                        the problem.
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <div className="grid gap-4">
+                                      <div className="grid gap-3">
+                                        <div>
+                                          <label className="text-[var(--detail-font-color)] text-sm mr-2">
+                                            Playlist Name
+                                          </label>
+                                          <div className="flex items-center bg-[var(--primary)] rounded ">
+                                            <select
+                                              className="w-full focus:outline-0 text-[var(--background)] placeholder:text-[var(--primary)] py-2 px-4"
+                                              value={saveInPlayList}
+                                              onChange={(e) => {
+                                                setSaveInPlayList(
+                                                  e.target.value,
+                                                );
+                                                console.log(
+                                                  saveInPlayList,
+                                                  "--",
+                                                  SaveProblemId,
+                                                );
+                                              }}
+                                            >
+                                              <option> Select Playlist</option>
+                                              {allPlaylists.map((p) => (
+                                                <option key={p.id} value={p.id}>
+                                                  {p.name}
+                                                </option>
+                                              ))}
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <DialogFooter>
+                                      <DialogClose asChild>
+                                        <button
+                                          className="bg-[var(--primary)] text-[var(--background)] py-2 px-3 text-sm rounded flex items-center cursor-pointer"
+                                          onClick={saveProblem}
+                                        >
+                                          Save
+                                        </button>
+                                      </DialogClose>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </Dialog>
                               </TooltipTrigger>
                               <TooltipContent>
                                 <p>Save</p>

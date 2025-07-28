@@ -3,7 +3,10 @@ import { body, param } from "express-validator";
 const createPlaylistValidator = () => {
   return [
     body("name").trim().notEmpty().withMessage("Title is required"),
-    body("description").trim().notEmpty().withMessage("Title is required"),
+    body("description")
+      .trim()
+      .notEmpty()
+      .withMessage("Description is required"),
   ];
 };
 
@@ -18,10 +21,7 @@ const getDeletePlaylistValidator = () => {
 
 const addProblemToPlaylistValidator = () => {
   return [
-    body("problemId")
-      .trim()
-      .notEmpty()
-      .withMessage("problem id is required"),
+    body("problemId").trim().notEmpty().withMessage("problem id is required"),
     param("playlistId")
       .trim()
       .notEmpty()
@@ -46,5 +46,5 @@ export {
   createPlaylistValidator,
   getDeletePlaylistValidator,
   addProblemToPlaylistValidator,
-  removeProblemToPlaylistValidator
+  removeProblemToPlaylistValidator,
 };
